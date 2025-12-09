@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,7 @@
         .container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 1200px;
             width: 100%;
             overflow: hidden;
@@ -63,7 +64,9 @@
             font-weight: 500;
         }
 
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid #e0e0e0;
@@ -72,7 +75,9 @@
             transition: all 0.3s;
         }
 
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: #667eea;
         }
@@ -125,7 +130,7 @@
         }
 
         .header-actions button {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -135,7 +140,7 @@
         }
 
         .header-actions button:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .content {
@@ -200,7 +205,9 @@
             display: block;
         }
 
-        table thead, table tbody, table tr {
+        table thead,
+        table tbody,
+        table tr {
             display: table;
             width: 100%;
             table-layout: fixed;
@@ -260,7 +267,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -373,13 +380,13 @@
             border-radius: 12px;
             margin-bottom: 20px;
             border: 2px solid #e0e0e0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .vacances-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .vacances-card-title {
@@ -499,7 +506,8 @@
                 font-size: 14px;
             }
 
-            table th, table td {
+            table th,
+            table td {
                 padding: 10px 8px;
             }
 
@@ -532,9 +540,9 @@
 </head>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = 'https://ugnirkolwlqblcnamthe.supabase.co'; // ton URL Supabase
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnbmlya29sd2xxYmxjbmFtdGhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzMDM1NzgsImV4cCI6MjA4MDg3OTU3OH0.oaCSXl5bPSqn-m1IsQiWcji7YzJBkeaTaHfq6uoHV-U'; // ta clé publique
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const SUPABASE_URL = 'https://ugnirkolwlqblcnamthe.supabase.co'; // ton URL Supabase
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnbmlya29sd2xxYmxjbmFtdGhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzMDM1NzgsImV4cCI6MjA4MDg3OTU3OH0.oaCSXl5bPSqn-m1IsQiWcji7YzJBkeaTaHfq6uoHV-U'; // ta clé publique
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 </script>
 
 
@@ -616,7 +624,8 @@
                         <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" style="margin-bottom: 15px;">
                         <button class="btn" onclick="importStagiaires()">Importer depuis Excel</button>
                         <p style="margin-top: 10px; color: #666; font-size: 13px;">Format attendu: CIN, Nom, Prénom</p>
-                        <p style="margin-top: 5px; color: #667eea; font-size: 13px;">ℹ️ Le CIN sera utilisé comme identifiant et mot de passe</p>
+                        <p style="margin-top: 5px; color: #667eea; font-size: 13px;">ℹ️ Le CIN sera utilisé comme
+                            identifiant et mot de passe</p>
                     </div>
                     <div class="card">
                         <h3>Filtrer par année</h3>
@@ -781,7 +790,8 @@
                         <div class="form-group">
                             <label>Fichier du cours (PDF, DOCX, PPT, etc.)</label>
                             <input type="file" id="coursFile" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt">
-                            <p style="margin-top: 8px; color: #666; font-size: 12px;">📄 Formats acceptés: PDF, Word, PowerPoint, TXT</p>
+                            <p style="margin-top: 8px; color: #666; font-size: 12px;">📄 Formats acceptés: PDF, Word,
+                                PowerPoint, TXT</p>
                         </div>
                         <button class="btn" onclick="ajouterCours()">Publier le cours</button>
                     </div>
@@ -846,7 +856,8 @@
                         <div class="form-group">
                             <label>Fichier de l'examen (PDF, DOCX, etc.)</label>
                             <input type="file" id="examenFile" accept=".pdf,.doc,.docx,.txt">
-                            <p style="margin-top: 8px; color: #666; font-size: 12px;">📄 Formats acceptés: PDF, Word, TXT</p>
+                            <p style="margin-top: 8px; color: #666; font-size: 12px;">📄 Formats acceptés: PDF, Word,
+                                TXT</p>
                         </div>
                         <button class="btn" onclick="ajouterExamen()">Publier le sujet d'examen</button>
                     </div>
@@ -952,12 +963,14 @@
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea id="vacancesDescription" rows="3" placeholder="Informations supplémentaires..."></textarea>
+                            <textarea id="vacancesDescription" rows="3"
+                                placeholder="Informations supplémentaires..."></textarea>
                         </div>
                         <div class="form-group">
                             <label>Fichier (PDF, Image, Word)</label>
                             <input type="file" id="vacancesFile" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
-                            <p style="margin-top: 8px; color: #666; font-size: 12px;">📄 Formats acceptés: PDF, JPG, PNG, Word</p>
+                            <p style="margin-top: 8px; color: #666; font-size: 12px;">📄 Formats acceptés: PDF, JPG,
+                                PNG, Word</p>
                         </div>
                         <button class="btn" onclick="ajouterVacances()">Publier</button>
                     </div>
@@ -1010,8 +1023,10 @@
                             <label>Stagiaire</label>
                             <select id="resetStagiaire"></select>
                         </div>
-                        <button class="btn btn-secondary" onclick="reinitialiserMotDePasse()">Réinitialiser au CIN</button>
-                        <p style="margin-top: 10px; color: #666; font-size: 13px;">ℹ️ Le mot de passe sera réinitialisé au numéro CIN du stagiaire</p>
+                        <button class="btn btn-secondary" onclick="reinitialiserMotDePasse()">Réinitialiser au
+                            CIN</button>
+                        <p style="margin-top: 10px; color: #666; font-size: 13px;">ℹ️ Le mot de passe sera réinitialisé
+                            au numéro CIN du stagiaire</p>
                     </div>
                 </div>
             </div>
@@ -1211,7 +1226,7 @@
         async function loadData() {
             // Afficher un loader si possible, sinon juste attendre
             console.log('Chargement des données...');
-            
+
             try {
                 const [
                     { data: stagiaires },
@@ -1240,7 +1255,7 @@
                 data.modules = (modules || []).map(m => ({
                     id: m.id,
                     nom: m.nom,
-                    nbControles: m.nb_controles, 
+                    nbControles: m.nb_controles,
                     annee: m.annee,
                     type: m.type,
                     coefficient: m.coefficient
@@ -1308,14 +1323,14 @@
                     id: v.id,
                     titre: v.titre,
                     description: v.description,
-                    fichierNom: 'Document', 
+                    fichierNom: 'Document',
                     fichierTaille: '-',
                     fichierData: v.fichier_url,
                     datePublication: new Date(v.date_publication).toLocaleDateString()
                 }));
 
                 console.log('Données chargées:', data);
-                
+
                 // Rafraîchir l'affichage si connecté
                 if (currentUser) {
                     if (currentUser.role === 'formateur') {
@@ -1327,7 +1342,7 @@
 
             } catch (error) {
                 console.error("Erreur lors du chargement des données:", error);
-                alert("Erreur de synchronisation avec la base de données.");
+                alert("Erreur de connexion: " + (error.message || JSON.stringify(error)));
             }
         }
 
@@ -1358,7 +1373,7 @@
                 const { data: stagiaires, error: err } = await supabase
                     .from('stagiaires')
                     .select('*')
-                    .eq('cin', username) 
+                    .eq('cin', username)
                     .eq('password', password)
                     .single();
 
@@ -1409,16 +1424,16 @@
         function importStagiaires() {
             const file = document.getElementById('excelFile').files[0];
             const annee = document.getElementById('importAnnee').value;
-            
+
             if (!file) {
                 alert('Veuillez sélectionner un fichier Excel');
                 return;
             }
 
             const reader = new FileReader();
-            reader.onload = async function(e) {
+            reader.onload = async function (e) {
                 const data_xlsx = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data_xlsx, {type: 'array'});
+                const workbook = XLSX.read(data_xlsx, { type: 'array' });
                 const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
                 const jsonData = XLSX.utils.sheet_to_json(firstSheet);
 
@@ -1458,9 +1473,9 @@
             const tbody = document.querySelector('#stagiairesList tbody');
             const filter = document.getElementById('filterAnnee')?.value || '';
             tbody.innerHTML = '';
-            
+
             const stagiairesFiltr = filter ? data.stagiaires.filter(s => s.annee === filter) : data.stagiaires;
-            
+
             stagiairesFiltr.forEach(s => {
                 tbody.innerHTML += `
                     <tr>
@@ -1520,9 +1535,9 @@
         function chargerModulesParAnnee() {
             const annee = document.getElementById('notesAnnee').value;
             const moduleSelect = document.getElementById('moduleSelect');
-            
+
             moduleSelect.innerHTML = '<option value="">-- Choisir un module --</option>';
-            
+
             if (annee) {
                 const modulesFiltr = data.modules.filter(m => m.annee === annee);
                 modulesFiltr.forEach(m => {
@@ -1534,13 +1549,13 @@
         function chargerNotesModule() {
             const moduleId = document.getElementById('moduleSelect').value;
             const annee = document.getElementById('notesAnnee').value;
-            
+
             if (!moduleId || !annee) return;
 
             const module = data.modules.find(m => m.id === moduleId);
             const stagiairesFiltres = data.stagiaires.filter(s => s.annee === annee);
             const section = document.getElementById('notesSection');
-            
+
             let html = '<table><thead><tr><th>Stagiaire</th>';
             for (let i = 1; i <= module.nbControles; i++) {
                 html += `<th>Contrôle ${i} (/20)</th>`;
@@ -1550,7 +1565,7 @@
             stagiairesFiltres.forEach(s => {
                 const key = `${moduleId}_${s.id}`;
                 const notes = data.notes[key] || { controles: [], efm: '' };
-                
+
                 html += `<tr><td>${s.nom} ${s.prenom}</td>`;
                 for (let i = 0; i < module.nbControles; i++) {
                     const val = notes.controles[i] !== undefined ? notes.controles[i] : '';
@@ -1560,7 +1575,7 @@
                 const efmVal = notes.efm !== undefined && notes.efm !== null ? notes.efm : '';
                 html += `<td><input type="number" min="0" max="40" step="0.5" value="${efmVal}" 
                          onchange="sauvegarderNote('${moduleId}', '${s.id}', 'efm', 0, this.value)" style="width:70px"></td>`;
-                
+
                 const moyenne = calculerMoyenne(notes, module.nbControles);
                 html += `<td><strong>${moyenne}</strong></td></tr>`;
             });
@@ -1572,7 +1587,7 @@
         async function sauvegarderNote(moduleId, stagiaireId, type, index, value) {
             const key = `${moduleId}_${stagiaireId}`;
             const currentNotes = data.notes[key] || { controles: [], efm: null };
-            
+
             let newControles = [...(currentNotes.controles || [])];
             let newEfm = currentNotes.efm;
 
@@ -1588,9 +1603,9 @@
             if (!data.notes[key]) data.notes[key] = {};
             data.notes[key].controles = newControles;
             data.notes[key].efm = newEfm;
-            
+
             // Re-render handled by input value persistence in DOM, ideally should not re-render whole table
-            
+
             const { error } = await supabase.from('notes').upsert({
                 module_id: moduleId,
                 stagiaire_id: stagiaireId,
@@ -1611,14 +1626,14 @@
 
         function calculerMoyenne(notes, nbControles) {
             if (notes.efm === null || notes.efm === undefined) return '-';
-            
+
             if (nbControles === 0) {
                 return (notes.efm / 2).toFixed(2);
             }
-            
+
             let sommeControles = 0;
             let nbControlesValides = 0;
-            
+
             for (let i = 0; i < nbControles; i++) {
                 if (notes.controles[i] !== null && notes.controles[i] !== undefined) {
                     sommeControles += notes.controles[i];
@@ -1627,7 +1642,7 @@
             }
 
             if (nbControlesValides === 0) return '-';
-            
+
             const moyenneControles = sommeControles / nbControlesValides;
             const moyenne = (moyenneControles + (2 * notes.efm)) / 3;
             return moyenne.toFixed(2);
@@ -1675,7 +1690,7 @@
             tbody.innerHTML = '';
 
             const absencesParStagiaire = {};
-            
+
             data.stagiaires.forEach(s => {
                 if (!filter || s.annee === filter) {
                     absencesParStagiaire[s.id] = {
@@ -1758,12 +1773,12 @@
             const tbody = document.querySelector('#coursList tbody');
             const filter = document.getElementById('filterCoursAnnee')?.value || '';
             tbody.innerHTML = '';
-            
+
             const coursFiltres = filter ? data.cours.filter(c => c.annee === filter) : data.cours;
-            
+
             coursFiltres.forEach(c => {
                 const module = data.modules.find(m => m.id === c.moduleId);
-                const fileLink = c.fichierData.startsWith('http') ? 
+                const fileLink = c.fichierData.startsWith('http') ?
                     `<a href="${c.fichierData}" target="_blank">📄 ${c.fichierNom}</a>` : c.fichierNom;
 
                 tbody.innerHTML += `
@@ -1828,15 +1843,15 @@
             const tbody = document.querySelector('#examensList tbody');
             const filter = document.getElementById('filterExamenAnnee')?.value || '';
             tbody.innerHTML = '';
-            
+
             const examensFiltres = filter ? data.examens.filter(e => e.annee === filter) : data.examens;
-            
+
             examensFiltres.forEach(e => {
                 const module = data.modules.find(m => m.id === e.moduleId);
-                const typeColor = e.type === 'Contrôle' ? '#28a745' : 
-                                 e.type === 'EFM Local' ? '#fd7e14' : 
-                                 e.type === 'EFM Régional' ? '#dc3545' : '#6f42c1';
-                const fileLink = e.fichierData.startsWith('http') ? 
+                const typeColor = e.type === 'Contrôle' ? '#28a745' :
+                    e.type === 'EFM Local' ? '#fd7e14' :
+                        e.type === 'EFM Régional' ? '#dc3545' : '#6f42c1';
+                const fileLink = e.fichierData.startsWith('http') ?
                     `<a href="${e.fichierData}" target="_blank">📄 ${e.fichierNom}</a>` : e.fichierNom;
 
                 tbody.innerHTML += `
@@ -1896,10 +1911,10 @@
             const tbody = document.querySelector('#datesExamensList tbody');
             const filter = document.getElementById('filterDateExamenAnnee')?.value || '';
             tbody.innerHTML = '';
-            
+
             const datesFiltrees = filter ? data.datesExamens.filter(d => d.annee === filter) : data.datesExamens;
             datesFiltrees.sort((a, b) => new Date(a.date) - new Date(b.date));
-            
+
             datesFiltrees.forEach(d => {
                 const module = data.modules.find(m => m.id === d.moduleId);
                 const badgeColor = d.type === 'Contrôle' ? '#28a745' : d.type === 'EFM' ? '#fd7e14' : '#dc3545';
@@ -1956,9 +1971,9 @@
         function afficherVacances() {
             const tbody = document.querySelector('#vacancesList tbody');
             tbody.innerHTML = '';
-            
+
             data.vacances.forEach(v => {
-                const fileLink = v.fichierData.startsWith('http') ? 
+                const fileLink = v.fichierData.startsWith('http') ?
                     `<a href="${v.fichierData}" target="_blank">📄 Document</a>` : v.fichierNom;
 
                 tbody.innerHTML += `
@@ -2072,7 +2087,7 @@
             }
 
             const stagiaire = data.stagiaires.find(s => s.id === stagiaireId);
-            
+
             if (confirm(`Réinitialiser le mot de passe de ${stagiaire.nom} à son CIN?`)) {
                 const { error } = await supabase.from('stagiaires')
                     .update({ password: stagiaire.cin })
@@ -2091,9 +2106,9 @@
             document.getElementById('totalModules').textContent = data.modules.length;
             document.getElementById('totalCours').textContent = data.cours.length;
             document.getElementById('totalExamens').textContent = data.examens.length;
-            
+
             afficherStagiaires();
-            
+
             const modulesSelects = ['coursModule', 'examenModule', 'dateExamenModule'];
             modulesSelects.forEach(selectId => {
                 const select = document.getElementById(selectId);
@@ -2112,27 +2127,27 @@
 
         function loadStagiaireData() {
             const annee = currentUser.annee;
-            
+
             // Mes notes
             const tbody = document.querySelector('#mesNotesTable tbody');
             tbody.innerHTML = '';
-            
+
             const mesModules = data.modules.filter(m => m.annee === annee);
-            
+
             mesModules.forEach(m => {
                 const key = `${m.id}_${currentUser.id}`;
                 const notes = data.notes[key] || { controles: [], efm: null };
-                
+
                 const nbControles = m.nbControles || 0;
-                
+
                 let cHtml = '';
                 for (let i = 0; i < nbControles; i++) {
-                     cHtml += notes.controles[i] ? `Contrôle ${i+1}: ${notes.controles[i]}/20<br>` : `Contrôle ${i+1}: -<br>`;
+                    cHtml += notes.controles[i] ? `Contrôle ${i + 1}: ${notes.controles[i]}/20<br>` : `Contrôle ${i + 1}: -<br>`;
                 }
 
                 const moyenne = calculerMoyenne(notes, nbControles);
                 const typeColor = m.type === 'Local' ? '#28a745' : '#dc3545';
-                
+
                 tbody.innerHTML += `
                     <tr>
                         <td>${m.nom}</td>
@@ -2152,7 +2167,7 @@
             mesCours.forEach(c => {
                 const module = data.modules.find(m => m.id === c.moduleId);
                 const link = c.fichierData.startsWith('http') ? c.fichierData : '#';
-                
+
                 coursTbody.innerHTML += `
                     <tr>
                         <td>${c.titre}</td>
@@ -2169,9 +2184,9 @@
             const mesExamens = data.examens.filter(e => e.annee === annee);
             mesExamens.forEach(e => {
                 const module = data.modules.find(m => m.id === e.moduleId);
-                const typeColor = e.type === 'Contrôle' ? '#28a745' : 
-                                 e.type === 'EFM Local' ? '#fd7e14' : 
-                                 e.type === 'EFM Régional' ? '#dc3545' : '#6f42c1';
+                const typeColor = e.type === 'Contrôle' ? '#28a745' :
+                    e.type === 'EFM Local' ? '#fd7e14' :
+                        e.type === 'EFM Régional' ? '#dc3545' : '#6f42c1';
                 const moduleTypeColor = module && module.type === 'Local' ? '#28a745' : '#dc3545';
                 const link = e.fichierData.startsWith('http') ? e.fichierData : '#';
 
@@ -2224,7 +2239,7 @@
             } else {
                 let html = '';
                 data.vacances.forEach(v => {
-                    const downloadBtn = v.fichierData.startsWith('http') ? 
+                    const downloadBtn = v.fichierData.startsWith('http') ?
                         `<a href="${v.fichierData}" target="_blank" class="vacances-download-btn">📥 Télécharger/Voir</a>` : '';
 
                     html += `
@@ -2248,4 +2263,5 @@
         init();
     </script>
 </body>
+
 </html>
