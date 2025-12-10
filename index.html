@@ -147,67 +147,66 @@
             padding: 40px;
         }
 
-        /* Updated Menu Style */
+        /* Updated Menu Style - Modern Pill Design */
         .tabs {
             display: flex;
-            gap: 0;
+            justify-content: center;
+            gap: 15px;
             margin-bottom: 30px;
             border-bottom: none;
-            padding-bottom: 0;
-            overflow-x: auto;
+            padding: 10px;
             flex-wrap: wrap;
-            background: #000;
-            /* Background strip if needed, or transparent */
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
         }
 
         .tab {
-            padding: 12px 20px;
-            background: #000;
-            /* Default black */
-            color: white;
-            border: 1px solid #333;
-            /* Slight separator */
+            padding: 10px 24px;
+            background: white;
+            color: #555;
+            border: 1px solid transparent;
             cursor: pointer;
             font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
-            flex: 1;
-            /* Distribute space */
-            text-align: center;
-            border-radius: 0;
-            /* Blocky */
-            margin-bottom: 0;
-        }
-
-        .tab:first-child {
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
-        }
-
-        .tab:last-child {
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
+            border-radius: 50px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .tab:hover {
-            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            color: #667eea;
         }
 
         .tab.active {
-            background: #28a745;
-            /* Green for active */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-bottom: none;
-            margin-bottom: 0;
+            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
+            border: none;
+            transform: scale(1.02);
+            margin-bottom: 5px;
         }
 
-        /* Special colors for specific tabs if we want to mimic the image exactly 
-           Assuming "Vue d'ensemble" is like "Avancement" (Green)
-           But generally, Active = Green is the pattern in the image.
-        */
-
         /* Responsive Design */
+        @media (max-width: 992px) {
+            .tabs {
+                gap: 10px;
+                padding: 10px 5px;
+            }
+
+            .tab {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 border-radius: 0;
@@ -235,26 +234,50 @@
             }
 
             .content {
-                padding: 20px;
+                padding: 15px;
             }
 
+            /* Mobile Menu: Horizontal Scroll */
             .tabs {
-                flex-direction: column;
-                /* Stack tabs on mobile */
-                gap: 5px;
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 15px;
+                /* Scrollbar space */
+                margin-left: -15px;
+                margin-right: -15px;
+                padding-left: 15px;
+                border-radius: 0;
+                background: transparent;
+                backdrop-filter: none;
+            }
+
+            .tabs::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            .tabs::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            .tabs::-webkit-scrollbar-thumb {
+                background: #ccc;
+                border-radius: 4px;
             }
 
             .tab {
-                width: 100%;
-                border-radius: 4px;
-                /* Rounded individual buttons on mobile */
-                flex: none;
+                flex: 0 0 auto;
+                margin-bottom: 0;
+                font-size: 14px;
+                padding: 10px 18px;
             }
 
             .card {
                 padding: 15px;
             }
 
+            /* Make tables scrollable smoothly */
             table {
                 font-size: 13px;
                 display: block;
@@ -265,14 +288,6 @@
             table th,
             table td {
                 padding: 10px 8px;
-            }
-
-            /* Make inputs stack nicely */
-            .form-group input,
-            .form-group select,
-            .form-group textarea {
-                font-size: 16px;
-                /* Avoid zoom on iOS */
             }
 
             .grid {
@@ -287,8 +302,7 @@
 
         @media (max-width: 480px) {
             body {
-                padding: 10px;
-                /* Less padding on small screens */
+                padding: 5px;
             }
 
             .logo h1 {
@@ -306,72 +320,23 @@
             }
 
             .btn-small {
-                padding: 6px 10px;
-                font-size: 12px;
-                display: block;
-                /* Stack buttons in table if needed */
+                display: inline-block;
                 margin-bottom: 5px;
-                width: 100%;
+                width: auto;
             }
 
-            /* Optimize tables for very small screens */
-            table thead {
-                display: none;
-                /* Hide headers, show block cards for rows could be better but sticking to table with scroll */
-            }
-
-            table tbody tr {
-                display: block;
-                margin-bottom: 15px;
-                border: 1px solid #eee;
-                border-radius: 8px;
-                padding: 10px;
-            }
-
+            /* Minimal table adjustments for tiny screens */
             table td {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                text-align: right;
-                padding: 8px 0;
-                border-bottom: 1px solid #eee;
-                white-space: normal;
-                /* Allow wrapping */
-            }
-
-            table td:last-child {
-                border-bottom: none;
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            /* Add labels via CSS content if possible, or just keep it simple. 
-               For now, standard table with scroll is safer than complex CSS table-to-card transformation 
-               without rewriting HTML structure. 
-               Let's revert the "thead none" and just rely on overflow-x for the table itself, 
-               but keep the other touch-friendly improvements.
-            */
-            table thead {
-                display: table-header-group;
-            }
-
-            table tbody tr {
-                display: table-row;
-            }
-
-            table td {
-                display: table-cell;
-                text-align: left;
+                padding: 8px 5px;
             }
 
             /* Ensure modal fits */
             .modal-content {
-                width: 95%;
-                padding: 20px;
+                width: 98%;
+                padding: 15px;
             }
         }
 
-        /* Small smartphones (old iPhones, Androids) */
         @media (max-width: 320px) {
             .logo h1 {
                 font-size: 20px;
@@ -381,13 +346,9 @@
                 font-size: 18px;
             }
 
-            .content {
-                padding: 10px;
-            }
-
             .tab {
-                padding: 8px 10px;
                 font-size: 12px;
+                padding: 6px 10px;
             }
         }
     </style>
