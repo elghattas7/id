@@ -620,10 +620,7 @@
                             <label>Module associé</label>
                             <select id="coursModule"></select>
                         </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea id="coursDescription" rows="3"></textarea>
-                        </div>
+
                         <div class="form-group">
                             <label>Fichier du cours (PDF, DOCX, PPT, etc.)</label>
                             <input type="file" id="coursFile" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt">
@@ -670,25 +667,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Type d'examen</label>
-                            <select id="examenType">
-                                <option value="Contrôle">Contrôle</option>
-                                <option value="EFM Local">EFM Local</option>
-                                <option value="EFM Régional">EFM Régional</option>
-                                <option value="Examen de fin de formation">Examen de fin de formation</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label>Titre de l'examen</label>
                             <input type="text" id="examenTitle">
-                        </div>
-                        <div class="form-group">
-                            <label>Module associé</label>
-                            <select id="examenModule"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea id="examenDescription" rows="3"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Fichier de l'examen (PDF, DOCX, etc.)</label>
@@ -798,11 +778,7 @@
                             <label>Titre</label>
                             <input type="text" id="vacancesTitle" placeholder="Ex: Vacances d'hiver 2024">
                         </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea id="vacancesDescription" rows="3"
-                                placeholder="Informations supplémentaires..."></textarea>
-                        </div>
+
                         <div class="form-group">
                             <label>Fichier (PDF, Image, Word)</label>
                             <input type="file" id="vacancesFile" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
@@ -817,7 +793,6 @@
                             <thead>
                                 <tr>
                                     <th>Titre</th>
-                                    <th>Description</th>
                                     <th>Fichier</th>
                                     <th>Date publication</th>
                                     <th>Actions</th>
@@ -918,7 +893,6 @@
                                 <tr>
                                     <th>Titre</th>
                                     <th>Module</th>
-                                    <th>Description</th>
                                     <th>Télécharger</th>
                                 </tr>
                             </thead>
@@ -938,7 +912,6 @@
                                     <th>Titre</th>
                                     <th>Module</th>
                                     <th>Type Module</th>
-                                    <th>Description</th>
                                     <th>Télécharger</th>
                                 </tr>
                             </thead>
@@ -1341,6 +1314,9 @@
 
             const stagiairesFiltr = filter ? data.stagiaires.filter(s => s.annee === filter) : data.stagiaires;
 
+            // Sort alphabetically by Nom
+            stagiairesFiltr.sort((a, b) => a.nom.localeCompare(b.nom));
+
             stagiairesFiltr.forEach(s => {
                 tbody.innerHTML += `
                     <tr>
@@ -1599,7 +1575,7 @@
         async function ajouterCours() {
             const titre = document.getElementById('coursTitle').value;
             const moduleId = document.getElementById('coursModule').value;
-            const description = document.getElementById('coursDescription').value;
+            // Removed Description
             const fileInput = document.getElementById('coursFile');
             const annee = document.getElementById('coursAnnee').value;
 
@@ -1617,7 +1593,7 @@
                 titre: titre,
                 module_id: moduleId,
                 annee: annee,
-                description: description,
+                description: null, // Removed input
                 fichier_url: url,
                 fichier_nom: file.name,
                 fichier_taille: formatFileSize(file.size)
@@ -1669,14 +1645,18 @@
 
         async function ajouterExamen() {
             const titre = document.getElementById('examenTitle').value;
-            const moduleId = document.getElementById('examenModule').value;
-            const description = document.getElementById('examenDescription').value;
-            const fileInput = document.getElementById('examenFile');
             const annee = document.getElementById('examenAnnee').value;
-            const type = document.getElementById('examenType').value;
 
-            if (!titre || !moduleId || !fileInput.files[0]) {
-                alert('Veuillez remplir tous les champs et sélectionner un fichier');
+            if (!titre) {
+                alert('Veuillez remplir le titre');
+                return;
+            }
+
+            // Restored file upload logic
+            const fileInput = document.getElementById('examenFile');
+
+            if (!titre || !fileInput.files[0]) {
+                alert('Veuillez remplir le titre et sélectionner un fichier');
                 return;
             }
 
@@ -1686,10 +1666,10 @@
 
             const { error } = await supabase.from('examens').insert({
                 titre: titre,
-                module_id: moduleId,
-                type: type,
+                module_id: null,
+                type: 'Autre',
                 annee: annee,
-                description: description,
+                description: null,
                 fichier_url: url,
                 fichier_nom: file.name,
                 fichier_taille: formatFileSize(file.size)
@@ -1698,6 +1678,7 @@
             if (error) alert('Erreur DB: ' + error.message);
             else {
                 alert('Examen publié!');
+                document.getElementById('examenTitle').value = '';
                 await loadData();
             }
         }
@@ -1806,7 +1787,6 @@
 
         async function ajouterVacances() {
             const titre = document.getElementById('vacancesTitle').value;
-            const description = document.getElementById('vacancesDescription').value;
             const fileInput = document.getElementById('vacancesFile');
 
             if (!titre || !fileInput.files[0]) {
@@ -1820,7 +1800,7 @@
 
             const { error } = await supabase.from('vacances').insert({
                 titre: titre,
-                description: description,
+                description: null,
                 fichier_url: url
             });
 
@@ -1842,7 +1822,6 @@
                 tbody.innerHTML += `
                     <tr>
                         <td>${v.titre}</td>
-                        <td>${v.description}</td>
                         <td>${fileLink}</td>
                         <td>${v.datePublication}</td>
                         <td>
@@ -2054,7 +2033,6 @@
                     <tr>
                         <td>${c.titre}</td>
                         <td>${module ? module.nom : 'N/A'}</td>
-                        <td>${c.description}</td>
                         <td><a href="${link}" target="_blank" class="btn-small btn-download">📥 Télécharger</a></td>
                     </tr>
                 `;
@@ -2078,7 +2056,6 @@
                         <td>${e.titre}</td>
                         <td>${module ? module.nom : 'N/A'}</td>
                         <td><span style="background: ${moduleTypeColor}; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${module ? module.type : 'N/A'}</span></td>
-                        <td>${e.description}</td>
                         <td><a href="${link}" target="_blank" class="btn-small btn-download">📥 Télécharger</a></td>
                     </tr>
                 `;
@@ -2127,7 +2104,7 @@
                     html += `
                         <div class="vacances-card">
                             <div class="vacances-card-title">📅 ${v.titre}</div>
-                            <div class="vacances-card-description">${v.description || 'Aucune description'}</div>
+
                             <div class="vacances-card-meta">
                                 <div class="vacances-card-meta-item"><strong>📆 Publié le:</strong> ${v.datePublication}</div>
                             </div>
