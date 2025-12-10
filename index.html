@@ -691,9 +691,7 @@
                         <table id="examensList">
                             <thead>
                                 <tr>
-                                    <th>Type</th>
                                     <th>Titre</th>
-                                    <th>Module</th>
                                     <th>Année</th>
                                     <th>Fichier</th>
                                     <th>Taille</th>
@@ -908,10 +906,7 @@
                         <table id="mesExamensList">
                             <thead>
                                 <tr>
-                                    <th>Type</th>
                                     <th>Titre</th>
-                                    <th>Module</th>
-                                    <th>Type Module</th>
                                     <th>Télécharger</th>
                                 </tr>
                             </thead>
@@ -1206,7 +1201,8 @@
 
             } catch (e) {
                 console.error("Login exception:", e);
-                error.textContent = 'Erreur de connexion';
+                // Enhanced error reporting
+                error.textContent = 'Erreur de connexion: ' + (e.message || e);
                 error.style.display = 'block';
             }
         }
@@ -1691,18 +1687,12 @@
             const examensFiltres = filter ? data.examens.filter(e => e.annee === filter) : data.examens;
 
             examensFiltres.forEach(e => {
-                const module = data.modules.find(m => m.id === e.moduleId);
-                const typeColor = e.type === 'Contrôle' ? '#28a745' :
-                    e.type === 'EFM Local' ? '#fd7e14' :
-                        e.type === 'EFM Régional' ? '#dc3545' : '#6f42c1';
                 const fileLink = e.fichierData.startsWith('http') ?
                     `<a href="${e.fichierData}" target="_blank">📄 ${e.fichierNom}</a>` : e.fichierNom;
 
                 tbody.innerHTML += `
                     <tr>
-                        <td><span style="background: ${typeColor}; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${e.type}</span></td>
                         <td>${e.titre}</td>
-                        <td>${module ? module.nom : 'N/A'}</td>
                         <td><span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${e.annee}</span></td>
                         <td>${fileLink}</td>
                         <td>${e.fichierTaille}</td>
@@ -2043,19 +2033,11 @@
             examensTbody.innerHTML = '';
             const mesExamens = data.examens.filter(e => e.annee === annee);
             mesExamens.forEach(e => {
-                const module = data.modules.find(m => m.id === e.moduleId);
-                const typeColor = e.type === 'Contrôle' ? '#28a745' :
-                    e.type === 'EFM Local' ? '#fd7e14' :
-                        e.type === 'EFM Régional' ? '#dc3545' : '#6f42c1';
-                const moduleTypeColor = module && module.type === 'Local' ? '#28a745' : '#dc3545';
                 const link = e.fichierData.startsWith('http') ? e.fichierData : '#';
 
                 examensTbody.innerHTML += `
                     <tr>
-                        <td><span style="background: ${typeColor}; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${e.type}</span></td>
                         <td>${e.titre}</td>
-                        <td>${module ? module.nom : 'N/A'}</td>
-                        <td><span style="background: ${moduleTypeColor}; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${module ? module.type : 'N/A'}</span></td>
                         <td><a href="${link}" target="_blank" class="btn-small btn-download">📥 Télécharger</a></td>
                     </tr>
                 `;
