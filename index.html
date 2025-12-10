@@ -1187,9 +1187,6 @@
         // Données en mémoire (Cache local pour l'UI)
         let currentUser = null;
         let data = {
-            users: {
-                formateur: { username: '10375', password: 'admin123', role: 'formateur', nom: 'Formateur' }
-            },
             stagiaires: [],
             modules: [],
             notes: {},
@@ -1361,32 +1358,45 @@
             const password = document.getElementById('password').value;
             const error = document.getElementById('loginError');
 
-            // Vérifier formateur (Hardcoded)
-            if (data.users.formateur.username === username && data.users.formateur.password === password) {
-                currentUser = { ...data.users.formateur, type: 'formateur' };
-                await loadData();
-                showDashboard('formateur');
-                return;
-            }
+            error.style.display = 'none';
 
-            // Vérifier stagiaire (Via DB)
             try {
-                const { data: stagiaires, error: err } = await supabase
+                // 1. Vérifier si c'est un formateur
+                const { data: formateurData, error: formateurError } = await supabase
+                    .from('formateurs')
+                    .select('*')
+                    .eq('username', username)
+                    .eq('password', password)
+                    .single();
+
+                if (formateurData) {
+                    currentUser = { ...formateurData, type: 'formateur', role: 'formateur' }; // Ensure compatibility
+                    await loadData();
+                    showDashboard('formateur');
+                    return;
+                }
+
+                // 2. Vérifier si c'est un stagiaire
+                const { data: stagiaireData, error: stagiaireError } = await supabase
                     .from('stagiaires')
                     .select('*')
                     .eq('cin', username)
                     .eq('password', password)
                     .single();
 
-                if (err || !stagiaires) {
-                    error.textContent = 'Identifiant ou mot de passe incorrect';
-                    error.style.display = 'block';
-                } else {
-                    currentUser = { ...stagiaires, type: 'stagiaire' };
+                if (stagiaireData) {
+                    currentUser = { ...stagiaireData, type: 'stagiaire', role: 'stagiaire' };
                     await loadData();
                     showDashboard('stagiaire');
+                    return;
                 }
+
+                // Si aucun user trouvé
+                error.textContent = 'Identifiant ou mot de passe incorrect';
+                error.style.display = 'block';
+
             } catch (e) {
+                console.error("Login exception:", e);
                 error.textContent = 'Erreur de connexion';
                 error.style.display = 'block';
             }
