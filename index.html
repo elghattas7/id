@@ -542,7 +542,8 @@
 <script>
     const SUPABASE_URL = 'https://ugnirkolwlqblcnamthe.supabase.co'; // ton URL Supabase
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnbmlya29sd2xxYmxjbmFtdGhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzMDM1NzgsImV4cCI6MjA4MDg3OTU3OH0.oaCSXl5bPSqn-m1IsQiWcji7YzJBkeaTaHfq6uoHV-U'; // ta clé publique
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // Fix: Access library via window to avoid shadowing, and overwrite with client instance
+    window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 </script>
 
 
