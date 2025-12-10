@@ -901,7 +901,7 @@
                                     <th>Coef.</th>
                                     <th>Contrôles</th>
                                     <th>EFM (/40)</th>
-                                    <th>Moyenne</th>
+                                    <th>Moyenne du module/20</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -1425,7 +1425,7 @@
             for (let i = 1; i <= module.nbControles; i++) {
                 html += `<th>Contrôle ${i} (/20)</th>`;
             }
-            html += '<th>EFM (/40)</th><th>Moyenne</th></tr></thead><tbody>';
+            html += '<th>EFM (/40)</th><th>Moyenne du module/20</th></tr></thead><tbody>';
 
             stagiairesFiltres.forEach(s => {
                 const key = `${moduleId}_${s.id}`;
@@ -1509,7 +1509,7 @@
             if (nbControlesValides === 0) return '-';
 
             const moyenneControles = sommeControles / nbControlesValides;
-            const moyenne = (moyenneControles + (2 * notes.efm)) / 3;
+            const moyenne = (moyenneControles + notes.efm) / 3;
             return moyenne.toFixed(2);
         }
 
