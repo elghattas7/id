@@ -716,13 +716,13 @@
                         </div>
                         <div class="form-group">
                             <label>Type d'examen</label>
-                            <select id="typeExamen">
+                            <select id="typeExamen" onchange="toggleModuleSelection()">
                                 <option value="Contrôle">Contrôle</option>
                                 <option value="EFM">EFM (Examen de Fin de Module)</option>
                                 <option value="EFF">EFF (Examen de Fin de Formation)</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="moduleSelectionGroup">
                             <label>Module</label>
                             <select id="dateExamenModule"></select>
                         </div>
@@ -837,6 +837,15 @@
                             CIN</button>
                         <p style="margin-top: 10px; color: #666; font-size: 13px;">ℹ️ Le mot de passe sera réinitialisé
                             au numéro CIN du stagiaire</p>
+
+                        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+
+                        <h3>Opérations groupées (Zone Dangereuse)</h3>
+                        <br>
+                        <button class="btn btn-secondary" onclick="reinitialiserMotsDePasse2A()"
+                            style="background: #dc3545;">
+                            ⚠️ Réinitialiser TOUS les mots de passe 2A (CIN@AnnéeHijri)
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1712,15 +1721,33 @@
             }
         }
 
+        function toggleModuleSelection() {
+            const type = document.getElementById('typeExamen').value;
+            const moduleGroup = document.getElementById('moduleSelectionGroup');
+            if (type === 'EFF') {
+                moduleGroup.style.display = 'none';
+            } else {
+                moduleGroup.style.display = 'block';
+            }
+        }
+
         async function ajouterDateExamen() {
             const annee = document.getElementById('dateExamenAnnee').value;
             const type = document.getElementById('typeExamen').value;
-            const moduleId = document.getElementById('dateExamenModule').value;
+            let moduleId = document.getElementById('dateExamenModule').value;
             const date = document.getElementById('dateExamen').value;
             const heureDebut = document.getElementById('heureDebut').value;
             const heureFin = document.getElementById('heureFin').value;
 
-            if (!moduleId || !date || !heureDebut || !heureFin) {
+            // For EFF, module is not required/relevant
+            if (type === 'EFF') {
+                moduleId = null;
+            } else if (!moduleId) {
+                alert('Veuillez sélectionner un module');
+                return;
+            }
+
+            if (!date || !heureDebut || !heureFin) {
                 alert('Veuillez remplir tous les champs');
                 return;
             }
@@ -1949,6 +1976,39 @@
                     alert(`Mot de passe réinitialisé: ${newPassword}`);
                     await loadData();
                 }
+            }
+        }
+
+        async function reinitialiserMotsDePasse2A() {
+            const stagiaires2A = data.stagiaires.filter(s => s.annee === '2A');
+            if (stagiaires2A.length === 0) {
+                alert('Aucun stagiaire 2A trouvé.');
+                return;
+            }
+
+            const hijriYear = getHijriYear();
+            const confirmMsg = `Voulez-vous vraiment réinitialiser le mot de passe de ${stagiaires2A.length} stagiaires de 2ème année ?\n\nNouveau format : CIN@${hijriYear}\n(Ex: AB123456@${hijriYear})`;
+
+            if (confirm(confirmMsg)) {
+                let successCount = 0;
+                let errorCount = 0;
+
+                for (const s of stagiaires2A) {
+                    const newPassword = `${s.cin}@${hijriYear}`;
+                    const { error } = await supabase.from('stagiaires')
+                        .update({ password: newPassword })
+                        .eq('id', s.id);
+
+                    if (error) {
+                        console.error(`Erreur pour ${s.nom}:`, error);
+                        errorCount++;
+                    } else {
+                        successCount++;
+                    }
+                }
+
+                alert(`Opération terminée.\nSuccès: ${successCount}\nErreurs: ${errorCount}`);
+                await loadData();
             }
         }
 
