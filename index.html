@@ -1442,7 +1442,7 @@
                          onchange="sauvegarderNote('${moduleId}', '${s.id}', 'efm', 0, this.value)" style="width:70px"></td>`;
 
                 const moyenne = calculerMoyenne(notes, module.nbControles);
-                html += `<td><strong>${moyenne}</strong></td></tr>`;
+                html += `<td id="moyenne_${moduleId}_${s.id}"><strong>${moyenne}</strong></td></tr>`;
             });
 
             html += '</tbody></table>';
@@ -1469,7 +1469,13 @@
             data.notes[key].controles = newControles;
             data.notes[key].efm = newEfm;
 
-            // Re-render handled by input value persistence in DOM, ideally should not re-render whole table
+            // Recalculate and update DOM immediately
+            const module = data.modules.find(m => m.id === moduleId);
+            const moyenne = calculerMoyenne(data.notes[key], module.nbControles);
+            const moyenneCell = document.getElementById(`moyenne_${moduleId}_${stagiaireId}`);
+            if (moyenneCell) {
+                moyenneCell.innerHTML = `<strong>${moyenne}</strong>`;
+            }
 
             const { error } = await supabase.from('notes').upsert({
                 module_id: moduleId,
@@ -1479,14 +1485,6 @@
             }, { onConflict: 'module_id,stagiaire_id' });
 
             if (error) console.error('Erreur save note:', error);
-            else {
-                // Recalculer la moyenne affichée si nécessaire
-                // Pour simplifier, on recharge les notes (peut être lourd) ou on met à jour le DOM juste pour la moyenne
-                const module = data.modules.find(m => m.id === moduleId);
-                const moyenne = calculerMoyenne(data.notes[key], module.nbControles);
-                // Trouver la ligne et mettre à jour la dernière cellule? 
-                // Trop complexe sans ID. On laisse comme ça pour l'instant.
-            }
         }
 
         function calculerMoyenne(notes, nbControles) {
