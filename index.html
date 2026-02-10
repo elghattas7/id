@@ -4,897 +4,684 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ID_IDOSR_Bouarfa</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 1200px;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .login-container {
-            padding: 60px 40px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo h1 {
-            color: #667eea;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .logo p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            margin-top: 10px;
-        }
-
-        .dashboard {
-            display: none;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .header h2 {
-            font-size: 24px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .header-actions button {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .header-actions button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .content {
-            padding: 40px;
-        }
-
-        /* Updated Menu Style - Modern Pill Design */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            border-bottom: none;
-            padding: 10px;
-            flex-wrap: wrap;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-        }
-
-        .tab {
-            padding: 10px 24px;
-            background: white;
-            color: #555;
-            border: 1px solid transparent;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
-            border-radius: 50px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tab:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            color: #667eea;
-        }
-
-        .tab.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
-            border: none;
-            transform: scale(1.02);
-            margin-bottom: 5px;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .tabs {
-                gap: 10px;
-                padding: 10px 5px;
-            }
-
-            .tab {
-                padding: 8px 16px;
-                font-size: 13px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                border-radius: 0;
-            }
-
-            .login-container {
-                padding: 40px 20px;
-            }
-
-            .header {
-                padding: 15px 20px;
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .header h2 {
-                font-size: 20px;
-                width: 100%;
-                margin-bottom: 5px;
-            }
-
-            .header-actions {
-                justify-content: center;
-            }
-
-            .content {
-                padding: 15px;
-            }
-
-            /* Mobile Menu: Horizontal Scroll */
-            .tabs {
-                justify-content: flex-start;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 15px;
-                /* Scrollbar space */
-                margin-left: -15px;
-                margin-right: -15px;
-                padding-left: 15px;
-                border-radius: 0;
-                background: transparent;
-                backdrop-filter: none;
-            }
-
-            .tabs::-webkit-scrollbar {
-                height: 4px;
-            }
-
-            .tabs::-webkit-scrollbar-track {
-                background: transparent;
-            }
-
-            .tabs::-webkit-scrollbar-thumb {
-                background: #ccc;
-                border-radius: 4px;
-            }
-
-            .tab {
-                flex: 0 0 auto;
-                margin-bottom: 0;
-                font-size: 14px;
-                padding: 10px 18px;
-            }
-
-            .card {
-                padding: 15px;
-            }
-
-            /* Make tables scrollable smoothly */
-            table {
-                font-size: 13px;
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-
-            table th,
-            table td {
-                padding: 10px 8px;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .time-inputs {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 5px;
-            }
-
-            .logo h1 {
-                font-size: 24px;
-            }
-
-            .header-actions {
-                width: 100%;
-                justify-content: center;
-                flex-direction: column;
-            }
-
-            .btn {
-                padding: 12px;
-            }
-
-            .btn-small {
-                display: inline-block;
-                margin-bottom: 5px;
-                width: auto;
-            }
-
-            /* Minimal table adjustments for tiny screens */
-            table td {
-                padding: 8px 5px;
-            }
-
-            /* Ensure modal fits */
-            .modal-content {
-                width: 98%;
-                padding: 15px;
-            }
-        }
-
-        @media (max-width: 320px) {
-            .logo h1 {
-                font-size: 20px;
-            }
-
-            .header h2 {
-                font-size: 18px;
-            }
-
-            .tab {
-                font-size: 12px;
-                padding: 6px 10px;
-            }
-        }
-    </style>
+    <title>ID_IDOSR_Bouarfa - Espace Numérique</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css?v=2">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script>
-    const SUPABASE_URL = 'https://ugnirkolwlqblcnamthe.supabase.co'; // ton URL Supabase
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnbmlya29sd2xxYmxjbmFtdGhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzMDM1NzgsImV4cCI6MjA4MDg3OTU3OH0.oaCSXl5bPSqn-m1IsQiWcji7YzJBkeaTaHfq6uoHV-U'; // ta clé publique
-    // Fix: Access library via window to avoid shadowing, and overwrite with client instance
-    window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-</script>
-
 
 <body>
+
+    <!-- Background Elements -->
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+
     <div class="container">
         <!-- Page de connexion -->
-        <div id="loginPage" class="login-container">
+        <div id="loginPage" class="login-container glass">
             <div class="logo">
-                <h1>📚 ISTA Bouarfa</h1>
-                <p>Infrastructure Digitale</p>
+                <h1>📚 ID_IDOSR_Bouarfa</h1>
+                <p>Infrastructure Digitale - ISTA Bouarfa</p>
             </div>
             <div class="form-group">
-                <label>Identifiant</label>
-                <input type="text" id="username" placeholder="Votre identifiant">
+                <label><i class="fas fa-user"></i> Identifiant / CIN</label>
+                <input type="text" id="username" placeholder="Entrez votre identifiant">
             </div>
             <div class="form-group">
-                <label>Mot de passe</label>
-                <input type="password" id="password" placeholder="Votre mot de passe">
+                <label for="password">Mot de passe</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Entrez votre mot de passe">
+                    <i class="fas fa-eye password-toggle" id="togglePasswordBtn"
+                        onclick="togglePasswordVisibility()"></i>
+                </div>
             </div>
-            <button class="btn" onclick="login()">Se connecter</button>
-            <div id="loginError" style="color: red; margin-top: 15px; text-align: center; display: none;"></div>
+            <button class="btn" onclick="login()">Se connecter <i class="fas fa-arrow-right"></i></button>
+            <div id="loginError"
+                style="color: #ff4b4b; margin-top: 15px; text-align: center; display: none; font-size: 0.9rem;"></div>
         </div>
 
         <!-- Dashboard Formateur -->
-        <div id="formateurDashboard" class="dashboard">
-            <div class="header">
-                <h2>Espace Formateur</h2>
-                <div class="header-actions">
-                    <span id="formateurName"></span>
-                    <button onclick="logout()">Déconnexion</button>
-                </div>
-            </div>
-            <div class="content">
-                <div class="tabs">
-                    <button class="tab active" onclick="switchTab('vue-ensemble')">Vue d'ensemble</button>
-                    <button class="tab" onclick="switchTab('stagiaires')">Stagiaires</button>
-                    <button class="tab" onclick="switchTab('modules')">Modules & Notes</button>
-                    <button class="tab" onclick="switchTab('absences')">Absences</button>
-                    <button class="tab" onclick="switchTab('cours')">Cours</button>
-                    <button class="tab" onclick="switchTab('examens')">Sujets d'examen</button>
-                    <button class="tab" onclick="switchTab('dates-examens')">Dates Examens</button>
-                    <button class="tab" onclick="switchTab('vacances')">Vacances</button>
-                    <button class="tab" onclick="switchTab('parametres')">Paramètres</button>
-                </div>
+        <div id="formateurDashboard" class="dashboard glass">
+            <div class="dashboard-layout">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="sidebar-header">
+                        <h2><i class="fas fa-layer-group"></i></h2>
+                    </div>
 
-                <!-- Vue d'ensemble -->
-                <div id="vue-ensemble" class="tab-content active">
-                    <div class="grid">
-                        <div class="stat-card">
-                            <h4>Total Stagiaires</h4>
-                            <p id="totalStagiaires">0</p>
-                        </div>
-                        <div class="stat-card">
-                            <h4>Modules</h4>
-                            <p id="totalModules">0</p>
-                        </div>
-                        <div class="stat-card">
-                            <h4>Cours Disponibles</h4>
-                            <p id="totalCours">0</p>
-                        </div>
-                        <div class="stat-card">
-                            <h4>Examens Disponibles</h4>
-                            <p id="totalExamens">0</p>
+                    <div class="user-info">
+                        <div class="user-avatar"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <div class="user-details">
+                            <h3 id="formateurName">Formateur</h3>
+                            <p>Formateur</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Gestion Stagiaires -->
-                <div id="stagiaires" class="tab-content">
-                    <div class="card">
-                        <h3>Importer la liste des stagiaires</h3>
-                        <div class="form-group">
-                            <label>Année</label>
-                            <select id="importAnnee">
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
-                        </div>
-                        <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" style="margin-bottom: 15px;">
-                        <button class="btn" onclick="importStagiaires()">Importer depuis Excel</button>
-                        <p style="margin-top: 10px; color: #666; font-size: 13px;">Format attendu: CIN, Nom, Prénom</p>
-                        <p style="margin-top: 5px; color: #667eea; font-size: 13px;">ℹ️ Le CIN sera utilisé comme
-                            identifiant et mot de passe</p>
+                    <nav class="nav-links">
+                        <button class="nav-item active" onclick="switchTab('vue-ensemble')">
+                            <i class="fas fa-home"></i> <span>Vue d'ensemble</span>
+                        </button>
+                        <button class="nav-item" onclick="switchTab('stagiaires')">
+                            <i class="fas fa-users"></i> <span>Stagiaires</span>
+                        </button>
+                        <button class="nav-item" onclick="switchTab('modules')">
+                            <i class="fas fa-book"></i> <span>Modules & Notes</span>
+                        </button>
+                        <button class="nav-item" onclick="switchTab('absences')">
+                            <i class="fas fa-user-clock"></i> <span>Absences</span>
+                        </button>
+                        <button class="nav-item" onclick="switchTab('cours')">
+                            <i class="fas fa-file-pdf"></i> <span>Cours</span>
+                        </button>
+                        <button class="nav-item" onclick="switchTab('examens')">
+                            <i class="fas fa-file-alt"></i> <span>Sujets des examens</span>
+                        </button>
+                        <button class="nav-item" onclick="switchTab('dates-examens')">
+                            <i class="fas fa-calendar-alt"></i> <span>Dates des examens</span>
+                        </button>
+                        <button class="nav-item" onclick="switchTab('vacances')">
+                            <i class="fas fa-umbrella-beach"></i> <span>Vacances</span>
+                        </button>
+                        <button class="nav-item" onclick="switchTab('statistiques')">
+                            <i class="fas fa-chart-bar"></i> <span>Statistiques</span>
+                        </button>
+                        <button class="nav-item" onclick="switchTab('parametres')">
+                            <i class="fas fa-cog"></i> <span>Paramètres</span>
+                        </button>
+                    </nav>
+
+                    <div class="nav-actions">
+                        <button class="btn-logout" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> <span>Déconnexion</span>
+                        </button>
                     </div>
-                    <div class="card">
-                        <h3>Filtrer par année</h3>
-                        <select id="filterAnnee" onchange="afficherStagiaires()">
-                            <option value="">Toutes les années</option>
-                            <option value="1A">1ère Année (1A)</option>
-                            <option value="2A">2ème Année (2A)</option>
-                        </select>
-                    </div>
-                    <div class="card">
-                        <h3>Liste des stagiaires</h3>
-                        <table id="stagiairesList">
-                            <thead>
-                                <tr>
-                                    <th>CIN</th>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Année</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+                </aside>
+
+                <!-- Mobile Header (Visible on mobile only) -->
+                <div class="mobile-header lg-hidden"> <!-- Added via CSS Media rule Logic -->
+                    <h3>ID_IDOSR_Bouarfa</h3>
+                    <button class="btn-small btn-delete" onclick="logout()"><i class="fas fa-power-off"></i></button>
                 </div>
 
-                <!-- Modules & Notes -->
-                <div id="modules" class="tab-content">
-                    <div class="card">
-                        <h3>Ajouter un module</h3>
-                        <div class="form-group">
-                            <label>Année</label>
-                            <select id="moduleAnnee">
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Nom du module</label>
-                            <input type="text" id="moduleName">
-                        </div>
-                        <div class="form-group">
-                            <label>Type de module</label>
-                            <select id="moduleType">
-                                <option value="Local">Local</option>
-                                <option value="Régional">Régional</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Coefficient</label>
-                            <input type="number" id="moduleCoefficient" min="1" max="10" step="0.5" value="1">
-                        </div>
-                        <div class="form-group">
-                            <label>Nombre de contrôles (0-3)</label>
-                            <select id="nbControles">
-                                <option value="0">0 contrôle</option>
-                                <option value="1">1 contrôle</option>
-                                <option value="2">2 contrôles</option>
-                                <option value="3">3 contrôles</option>
-                            </select>
-                        </div>
-                        <button class="btn" onclick="ajouterModule()">Ajouter le module</button>
-                    </div>
-                    <div class="card">
-                        <h3>Saisir les notes</h3>
-                        <div class="form-group">
-                            <label>Année</label>
-                            <select id="notesAnnee" onchange="chargerModulesParAnnee()">
-                                <option value="">-- Choisir une année --</option>
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Sélectionner un module</label>
-                            <select id="moduleSelect" onchange="chargerNotesModule()">
-                                <option value="">-- Choisir un module --</option>
-                            </select>
-                        </div>
-                        <div id="notesSection"></div>
-                    </div>
-                </div>
+                <!-- Main Content -->
+                <main class="main-content">
 
-                <!-- Absences -->
-                <div id="absences" class="tab-content">
-                    <div class="card">
-                        <h3>Enregistrer une absence</h3>
-                        <div class="form-group">
-                            <label>Année</label>
-                            <select id="absenceAnnee" onchange="chargerStagiairesParAnnee()">
-                                <option value="">-- Choisir une année --</option>
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
+                    <!-- Vue d'ensemble -->
+                    <div id="vue-ensemble" class="tab-content active">
+                        <div class="page-header">
+                            <h2>Tableau de bord</h2>
                         </div>
-                        <div class="form-group">
-                            <label>Stagiaire</label>
-                            <select id="absenceStagiaire"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Date</label>
-                            <input type="date" id="absenceDate">
-                        </div>
-                        <div class="form-group">
-                            <label>Horaire</label>
-                            <select id="absenceHoraire">
-                                <option value="8h30-11h">8h30 → 11h</option>
-                                <option value="11h-13h30">11h → 13h30</option>
-                                <option value="13h30-16h">13h30 → 16h</option>
-                                <option value="16h-18h30">16h → 18h30</option>
-                            </select>
-                        </div>
-                        <button class="btn" onclick="ajouterAbsence()">Enregistrer</button>
-                    </div>
-                    <div class="card">
-                        <h3>Cumul des absences</h3>
-                        <div class="form-group">
-                            <label>Filtrer par année</label>
-                            <select id="filterAbsenceAnnee" onchange="afficherAbsences()">
-                                <option value="">Toutes les années</option>
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
-                        </div>
-                        <table id="absencesTable">
-                            <thead>
-                                <tr>
-                                    <th>Stagiaire</th>
-                                    <th>Année</th>
-                                    <th>Total Séances</th>
-                                    <th>Détails</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Cours -->
-                <div id="cours" class="tab-content">
-                    <div class="card">
-                        <h3>Ajouter un cours</h3>
-                        <div class="form-group">
-                            <label>Année</label>
-                            <select id="coursAnnee">
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Titre du cours</label>
-                            <input type="text" id="coursTitle">
-                        </div>
-                        <div class="form-group">
-                            <label>Module associé</label>
-                            <select id="coursModule"></select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Fichier du cours (PDF, DOCX, PPT, etc.)</label>
-                            <input type="file" id="coursFile" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt">
-                            <p style="margin-top: 8px; color: #666; font-size: 12px;">📄 Formats acceptés: PDF, Word,
-                                PowerPoint, TXT</p>
-                        </div>
-                        <button class="btn" onclick="ajouterCours()">Publier le cours</button>
-                    </div>
-                    <div class="card">
-                        <h3>Liste des cours</h3>
-                        <div class="form-group">
-                            <label>Filtrer par année</label>
-                            <select id="filterCoursAnnee" onchange="afficherCours()">
-                                <option value="">Toutes les années</option>
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
-                        </div>
-                        <table id="coursList">
-                            <thead>
-                                <tr>
-                                    <th>Titre</th>
-                                    <th>Module</th>
-                                    <th>Année</th>
-                                    <th>Fichier</th>
-                                    <th>Taille</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Sujets d'examen (anciennement Examens) -->
-                <div id="examens" class="tab-content">
-                    <div class="card">
-                        <h3>Ajouter un sujet d'examen</h3>
-                        <div class="form-group">
-                            <label>Année</label>
-                            <select id="examenAnnee">
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Titre de l'examen</label>
-                            <input type="text" id="examenTitle">
-                        </div>
-                        <div class="form-group">
-                            <label>Fichier de l'examen (PDF, DOCX, etc.)</label>
-                            <input type="file" id="examenFile" accept=".pdf,.doc,.docx,.txt">
-                            <p style="margin-top: 8px; color: #666; font-size: 12px;">📄 Formats acceptés: PDF, Word,
-                                TXT</p>
-                        </div>
-                        <button class="btn" onclick="ajouterExamen()">Publier le sujet d'examen</button>
-                    </div>
-                    <div class="card">
-                        <h3>Liste des sujets d'examen</h3>
-                        <div class="form-group">
-                            <label>Filtrer par année</label>
-                            <select id="filterExamenAnnee" onchange="afficherExamens()">
-                                <option value="">Toutes les années</option>
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
-                        </div>
-                        <table id="examensList">
-                            <thead>
-                                <tr>
-                                    <th>Titre</th>
-                                    <th>Année</th>
-                                    <th>Fichier</th>
-                                    <th>Taille</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Dates Examens -->
-                <div id="dates-examens" class="tab-content">
-                    <div class="card">
-                        <h3>Ajouter une date d'examen</h3>
-                        <div class="form-group">
-                            <label>Année</label>
-                            <select id="dateExamenAnnee">
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Type d'examen</label>
-                            <select id="typeExamen" onchange="toggleModuleSelection()">
-                                <option value="Contrôle">Contrôle</option>
-                                <option value="EFM">EFM (Examen de Fin de Module)</option>
-                                <option value="EFF">EFF (Examen de Fin de Formation)</option>
-                            </select>
-                        </div>
-                        <div class="form-group" id="moduleSelectionGroup">
-                            <label>Module</label>
-                            <select id="dateExamenModule"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Date de l'examen</label>
-                            <input type="date" id="dateExamen">
-                        </div>
-                        <div class="time-inputs">
-                            <div class="form-group">
-                                <label>Heure de départ</label>
-                                <input type="time" id="heureDebut">
+                        <div class="grid">
+                            <div class="glass info-card">
+                                <h4>Total Stagiaires</h4>
+                                <p id="totalStagiaires">0</p>
+                                <i class="fas fa-users"
+                                    style="position: absolute; top: 20px; right: 20px; color: rgba(255,255,255,0.2); font-size: 1.5rem;"></i>
                             </div>
-                            <div class="form-group">
-                                <label>Heure de fin</label>
-                                <input type="time" id="heureFin">
+                            <div class="glass info-card">
+                                <h4>Total Modules</h4>
+                                <p id="totalModules">0</p>
+                                <i class="fas fa-book"
+                                    style="position: absolute; top: 20px; right: 20px; color: rgba(255,255,255,0.2); font-size: 1.5rem;"></i>
+                            </div>
+                            <div class="glass info-card">
+                                <h4>Cours Disponibles</h4>
+                                <p id="totalCours">0</p>
+                                <i class="fas fa-file-pdf"
+                                    style="position: absolute; top: 20px; right: 20px; color: rgba(255,255,255,0.2); font-size: 1.5rem;"></i>
+                            </div>
+                            <div class="glass info-card">
+                                <h4>Sujets d'examen</h4>
+                                <p id="totalExamens">0</p>
+                                <i class="fas fa-file-alt"
+                                    style="position: absolute; top: 20px; right: 20px; color: rgba(255,255,255,0.2); font-size: 1.5rem;"></i>
                             </div>
                         </div>
-                        <button class="btn" onclick="ajouterDateExamen()">Ajouter</button>
                     </div>
-                    <div class="card">
-                        <h3>Calendrier des examens</h3>
-                        <div class="form-group">
-                            <label>Filtrer par année</label>
-                            <select id="filterDateExamenAnnee" onchange="afficherDatesExamens()">
-                                <option value="">Toutes les années</option>
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
+
+                    <!-- Stagiaires -->
+                    <div id="stagiaires" class="tab-content">
+                        <div class="page-header">
+                            <h2>Gestion Stagiaires</h2>
+                        </div>
+                        <div class="glass content-card">
+                            <h3><i class="fas fa-file-import"></i> Importer</h3>
+                            <div class="grid" style="grid-template-columns: 1fr 2fr auto;">
+                                <div class="form-group">
+                                    <label>Année</label>
+                                    <select id="importAnnee">
+                                        <option value="1A">1ère Année (1A)</option>
+                                        <option value="2A">2ème Année (2A)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Fichier Excel (.xlsx)</label>
+                                    <input type="file" id="excelFile" accept=".xlsx,.xls,.csv">
+                                </div>
+                                <div class="form-group" style="display: flex; align-items: flex-end;">
+                                    <button class="btn" onclick="importStagiaires()">Importer</button>
+                                </div>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 0.8rem;">Columns: CIN, Nom, Prénom.
+                                Default Password: CIN@HijriYear</p>
+                        </div>
+
+                        <div class="glass content-card">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h3>Liste des Stagiaires</h3>
+                                <div class="form-group" style="margin: 0; width: 200px;">
+                                    <select id="filterAnnee" onchange="afficherStagiaires()">
+                                        <option value="">Toutes les années</option>
+                                        <option value="1A">1ère Année (1A)</option>
+                                        <option value="2A">2ème Année (2A)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="stagiairesList">
+                                    <thead>
+                                        <tr>
+                                            <th>CIN</th>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Année</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modules & Notes -->
+                    <div id="modules" class="tab-content">
+                        <div class="page-header">
+                            <h2>Modules & Notes</h2>
+                        </div>
+                        <div class="glass content-card">
+                            <h3>Nouveau Module</h3>
+                            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                                <div class="form-group">
+                                    <label>Année</label>
+                                    <select id="moduleAnnee">
+                                        <option value="1A">1ère Année (1A)</option>
+                                        <option value="2A">2ème Année (2A)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nom</label>
+                                    <input type="text" id="moduleName" placeholder="Ex: Réseaux">
+                                </div>
+                                <div class="form-group">
+                                    <label>Type</label>
+                                    <select id="moduleType">
+                                        <option value="Local">Local</option>
+                                        <option value="Régional">Régional</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Coef.</label>
+                                    <input type="number" id="moduleCoefficient" value="1" min="1" max="10" step="0.5">
+                                </div>
+                                <div class="form-group">
+                                    <label>Contrôles</label>
+                                    <select id="nbControles">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="display: flex; align-items: flex-end;">
+                                    <button class="btn" onclick="ajouterModule()"><i class="fas fa-plus"></i>
+                                        Ajouter</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass content-card">
+                            <h3>Saisie des notes</h3>
+                            <div class="grid" style="grid-template-columns: 1fr 1fr;">
+                                <div class="form-group">
+                                    <label>Année</label>
+                                    <select id="notesAnnee" onchange="chargerModulesParAnnee()">
+                                        <option value="">-- Choisir une année --</option>
+                                        <option value="1A">1ère Année (1A)</option>
+                                        <option value="2A">2ème Année (2A)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Module</label>
+                                    <select id="moduleSelect" onchange="chargerNotesModule()">
+                                        <option value="">-- D'abord choisir une année --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="notesSection"></div>
+                        </div>
+                    </div>
+
+                    <!-- Absences -->
+                    <div id="absences" class="tab-content">
+                        <div class="page-header">
+                            <h2>Gestion des Absences</h2>
+                        </div>
+                        <div class="glass content-card">
+                            <h3>Nouvelle Absence</h3>
+                            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                                <div class="form-group">
+                                    <label>Année</label>
+                                    <select id="absenceAnnee" onchange="chargerStagiairesParAnnee()">
+                                        <option value="">-- Choisir --</option>
+                                        <option value="1A">1A</option>
+                                        <option value="2A">2A</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Stagiaire</label>
+                                    <select id="absenceStagiaire"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="date" id="absenceDate">
+                                </div>
+                                <div class="form-group">
+                                    <label>Horaire</label>
+                                    <select id="absenceHoraire">
+                                        <option value="8h30-11h">8h30 → 11h</option>
+                                        <option value="11h-13h30">11h → 13h30</option>
+                                        <option value="13h30-16h">13h30 → 16h</option>
+                                        <option value="16h-18h30">16h → 18h30</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="display: flex; align-items: flex-end;">
+                                    <button class="btn" onclick="ajouterAbsence()">Enregistrer</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass content-card">
+                            <div style="display: flex; justify-content: space-between;">
+                                <h3>Historique</h3>
+                                <div class="form-group" style="margin:0; width: 150px;">
+                                    <select id="filterAbsenceAnnee" onchange="afficherAbsences()">
+                                        <option value="">Tout</option>
+                                        <option value="1A">1A</option>
+                                        <option value="2A">2A</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="absencesTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Stagiaire</th>
+                                            <th>Année</th>
+                                            <th>Total</th>
+                                            <th>Détails</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cours -->
+                    <div id="cours" class="tab-content">
+                        <div class="page-header">
+                            <h2>Gestion des Cours</h2>
+                        </div>
+                        <div class="glass content-card">
+                            <h3>Publier un cours</h3>
+                            <div class="grid">
+                                <div class="form-group">
+                                    <label>Année</label>
+                                    <select id="coursAnnee" onchange="chargerModulesPublication()">
+                                        <option value="1A">1A</option>
+                                        <option value="2A">2A</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Titre</label>
+                                    <input type="text" id="coursTitle">
+                                </div>
+                                <div class="form-group">
+                                    <label>Module (ID)</label>
+                                    <select id="coursModule">
+                                        <!-- Need logic to populate this or just input text if simplified -->
+                                        <!-- For now, re-using chargerModules functionality might be needed, 
+                                             but let's assume we load all modules on init for simplified usage -->
+                                    </select>
+                                    <!-- Temporary fix: script to populate this on load -->
+                                </div>
+                                <div class="form-group">
+                                    <label>Fichier</label>
+                                    <input type="file" id="coursFile" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt">
+                                </div>
+                            </div>
+                            <button class="btn" onclick="ajouterCours()">Publier</button>
+                        </div>
+                        <div class="glass content-card">
+                            <h3>Cours Publiés</h3>
+                            <select id="filterCoursAnnee" onchange="afficherCours()" style="margin-bottom: 20px;">
+                                <option value="">Tous</option>
+                                <option value="1A">1A</option>
+                                <option value="2A">2A</option>
                             </select>
+                            <div class="table-responsive">
+                                <table id="coursList">
+                                    <thead>
+                                        <tr>
+                                            <th>Titre</th>
+                                            <th>Module</th>
+                                            <th>Année</th>
+                                            <th>Lien</th>
+                                            <th>Taille</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
-                        <table id="datesExamensList">
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Module</th>
-                                    <th>Année</th>
-                                    <th>Date</th>
-                                    <th>Horaire</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
                     </div>
-                </div>
 
-                <!-- Vacances -->
-                <div id="vacances" class="tab-content">
-                    <div class="card">
-                        <h3>Publier le calendrier des vacances</h3>
-                        <div class="form-group">
-                            <label>Titre</label>
-                            <input type="text" id="vacancesTitle" placeholder="Ex: Vacances d'hiver 2024">
+                    <!-- Examens -->
+                    <div id="examens" class="tab-content">
+                        <div class="page-header">
+                            <h2>Sujets d'Examen</h2>
                         </div>
-
-                        <div class="form-group">
-                            <label>Fichier (PDF, Image, Word)</label>
-                            <input type="file" id="vacancesFile" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
-                            <p style="margin-top: 8px; color: #666; font-size: 12px;">📄 Formats acceptés: PDF, JPG,
-                                PNG, Word</p>
+                        <div class="glass content-card">
+                            <h3>Ajouter un Sujet</h3>
+                            <div class="grid">
+                                <div class="form-group">
+                                    <label>Année</label>
+                                    <select id="examenAnnee">
+                                        <option value="1A">1A</option>
+                                        <option value="2A">2A</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Titre</label>
+                                    <input type="text" id="examenTitre" placeholder="Ex: EFM Java 2023">
+                                </div>
+                                <div class="form-group">
+                                    <label>Fichier</label>
+                                    <input type="file" id="examenFile">
+                                </div>
+                            </div>
+                            <button class="btn" onclick="ajouterExamen()">Ajouter</button>
                         </div>
-                        <button class="btn" onclick="ajouterVacances()">Publier</button>
+                        <div class="glass content-card">
+                            <div class="table-responsive">
+                                <table id="examensList">
+                                    <thead>
+                                        <tr>
+                                            <th>Titre</th>
+                                            <th>Année</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="3" style="text-align:center">Chargement...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card">
-                        <h3>Calendriers publiés</h3>
-                        <table id="vacancesList">
-                            <thead>
-                                <tr>
-                                    <th>Titre</th>
-                                    <th>Fichier</th>
-                                    <th>Date publication</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+
+                    <!-- Dates d'examen -->
+                    <div id="dates-examens" class="tab-content">
+                        <div class="page-header">
+                            <h2>Dates d'examen</h2>
+                        </div>
+                        <div class="glass content-card">
+                            <h3>Ajouter une date d'examen</h3>
+                            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                                <div class="form-group">
+                                    <label>Titre</label>
+                                    <input type="text" id="examenDateTitre" placeholder="Ex: EFM Java">
+                                </div>
+                                <div class="form-group">
+                                    <label>Année</label>
+                                    <select id="examenDateAnnee">
+                                        <option value="1A">1A</option>
+                                        <option value="2A">2A</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="date" id="examenDateDate">
+                                </div>
+                                <div class="form-group">
+                                    <label>Heure Début</label>
+                                    <input type="time" id="examenDateHeureDebut">
+                                </div>
+                                <div class="form-group">
+                                    <label>Heure Fin</label>
+                                    <input type="time" id="examenDateHeureFin">
+                                </div>
+                                <div class="form-group" style="display: flex; align-items: flex-end;">
+                                    <button class="btn" onclick="ajouterExamenDate()"><i class="fas fa-plus"></i>
+                                        Ajouter</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass content-card">
+                            <h3>Calendrier Actuel</h3>
+                            <div class="timeline" id="calendrierList">
+                                <div style="text-align: center; color: var(--text-secondary);">
+                                    <p>Chargement du calendrier...</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Paramètres -->
-                <div id="parametres" class="tab-content">
-                    <div class="card">
-                        <h3>Changer le mot de passe</h3>
-                        <div class="form-group">
-                            <label>Ancien mot de passe</label>
-                            <input type="password" id="oldPassword">
+                    <!-- Vacances -->
+                    <div id="vacances" class="tab-content">
+                        <div class="page-header">
+                            <h2>Vacances</h2>
                         </div>
-                        <div class="form-group">
-                            <label>Nouveau mot de passe</label>
-                            <input type="password" id="newPassword">
+                        <div class="glass content-card">
+                            <ul id="vacancesList">
+                                <li>Chargement...</li>
+                            </ul>
                         </div>
-                        <div class="form-group">
-                            <label>Confirmer le mot de passe</label>
-                            <input type="password" id="confirmPassword">
-                        </div>
-                        <button class="btn" onclick="changerMotDePasse()">Modifier</button>
                     </div>
-                    <div class="card">
-                        <h3>Réinitialiser le mot de passe d'un stagiaire</h3>
-                        <div class="form-group">
-                            <label>Année</label>
-                            <select id="resetAnnee" onchange="chargerStagiairesReset()">
-                                <option value="">-- Choisir une année --</option>
-                                <option value="1A">1ère Année (1A)</option>
-                                <option value="2A">2ème Année (2A)</option>
-                            </select>
+
+                    <!-- Statistiques -->
+                    <div id="statistiques" class="tab-content">
+                        <div class="page-header">
+                            <h2>Statistiques de Connexion</h2>
                         </div>
-                        <div class="form-group">
-                            <label>Stagiaire</label>
-                            <select id="resetStagiaire"></select>
+                        <div class="glass content-card">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h3>Activité des Stagiaires</h3>
+                                <div class="form-group" style="margin: 0; width: 200px;">
+                                    <select id="filterStatsAnnee" onchange="afficherStatistiques()">
+                                        <option value="">Toutes les années</option>
+                                        <option value="1A">1ère Année (1A)</option>
+                                        <option value="2A">2ème Année (2A)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="statistiquesTable">
+                                    <thead>
+                                        <tr>
+                                            <th>CIN</th>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Année</th>
+                                            <th>Connexions</th>
+                                            <th>Dernière connexion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="6">Chargement...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <button class="btn btn-secondary" onclick="reinitialiserMotDePasse()">Réinitialiser au
-                            CIN</button>
-                        <p style="margin-top: 10px; color: #666; font-size: 13px;">ℹ️ Le mot de passe sera réinitialisé
-                            au numéro CIN du stagiaire</p>
-
-
-
                     </div>
-                </div>
+
+                    <!-- Paramètres -->
+                    <div id="parametres" class="tab-content">
+                        <div class="page-header">
+                            <h2>Paramètres</h2>
+                        </div>
+                        <div class="glass content-card" style="max-width: 600px; margin: 0 auto;">
+                            <h3>Mon Profil</h3>
+                            <div class="form-group">
+                                <label>Nom complet</label>
+                                <input type="text" id="paramsNom" readonly style="opacity: 0.7; cursor: not-allowed;">
+                            </div>
+
+                            <h3 style="margin-top: 30px;">Sécurité</h3>
+                            <div class="form-group">
+                                <label>Nouveau mot de passe</label>
+                                <input type="password" id="newPassword" placeholder="Laisser vide pour ne pas changer">
+                            </div>
+                            <div class="password-wrapper" style="margin-top: 10px;">
+                                <input type="password" id="confirmNewPassword"
+                                    placeholder="Confirmer le nouveau mot de passe">
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 30px;">Préférences</h3>
+                        <div class="form-group"
+                            style="display: flex; align-items: center; justify-content: space-between;">
+                            <label style="margin: 0;">Mode Sombre (Défaut)</label>
+                            <input type="checkbox" id="darkMode" checked disabled style="width: auto;">
+                        </div>
+
+                        <!-- Administration Stagiaires (Visible uniquement pour Formateur via JS) -->
+                        <div id="adminStagiairesSection"
+                            style="display: none; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                            <h3>Administration Stagiaires</h3>
+                            <div class="form-group">
+                                <label>Sélectionner un stagiaire</label>
+                                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                    <select id="filterAdminAnnee" style="width: 30%;"
+                                        onchange="filterStagiairesAdmin()">
+                                        <option value="">Année</option>
+                                        <option value="1A">1A</option>
+                                        <option value="2A">2A</option>
+                                    </select>
+                                    <select id="selectStagiaireAdmin" style="flex-grow: 1;">
+                                        <option value="">-- Choisir un stagiaire --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Nouveau mot de passe</label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="newStagiairePassword" placeholder="Nouveau mot de passe">
+                                </div>
+                                <div class="password-wrapper" style="margin-top: 10px;">
+                                    <input type="password" id="confirmStagiairePassword"
+                                        placeholder="Confirmer le mot de passe">
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" onclick="changeStagiairePassword()" style="width: 100%;">
+                                <i class="fas fa-key"></i> Changer le mot de passe du stagiaire
+                            </button>
+                        </div>
+
+                        <button class="btn" onclick="saveSettings()" style="margin-top: 20px; width: 100%;">
+                            <i class="fas fa-save"></i> Enregistrer mes préférences
+                        </button>
+                    </div>
             </div>
+
+            </main>
         </div>
+    </div>
 
-        <!-- Dashboard Stagiaire -->
-        <div id="stagiaireDashboard" class="dashboard">
-            <div class="header">
-                <h2>Espace Stagiaire</h2>
-                <div class="header-actions">
-                    <span id="stagiaireName"></span>
-                    <button onclick="logout()">Déconnexion</button>
+    <!-- Dashboard Stagiaire -->
+    <div id="stagiaireDashboard" class="dashboard glass">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2></h2>
                 </div>
-            </div>
-            <div class="content">
-                <div class="tabs">
-                    <button class="tab active" onclick="switchTab('mes-notes')">Mes Notes</button>
-                    <button class="tab" onclick="switchTab('mes-cours')">Mes Cours</button>
-                    <button class="tab" onclick="switchTab('mes-examens')">Mes sujets d'examen</button>
-                    <button class="tab" onclick="switchTab('calendrier-examens')">Calendrier Examens</button>
-                    <button class="tab" onclick="switchTab('mes-absences')">Mes Absences</button>
-                    <button class="tab" onclick="switchTab('vacances-stagiaire')">Vacances</button>
-                    <button class="tab" onclick="switchTab('mon-compte')">Mon Compte</button>
-                </div>
-
-                <!-- Mes Notes -->
-                <div id="mes-notes" class="tab-content active">
-                    <div class="card">
-                        <h3>Mes résultats</h3>
-                        <table id="mesNotesTable">
-                            <thead>
-                                <tr>
-                                    <th>Module</th>
-                                    <th>Type</th>
-                                    <th>Coef.</th>
-                                    <th>Contrôles</th>
-                                    <th>EFM (/40)</th>
-                                    <th>Moyenne du module/20</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                <div class="user-info">
+                    <div class="user-avatar"><i class="fas fa-user-graduate"></i></div>
+                    <div class="user-details">
+                        <h3 id="stagiaireName">Stagiaire</h3>
+                        <p id="stagiaireCIN">CIN</p>
                     </div>
                 </div>
+                <nav class="nav-links">
+                    <button class="nav-item active" onclick="switchTab('mes-notes')">
+                        <i class="fas fa-star"></i> <span>Mes Notes</span>
+                    </button>
+                    <button class="nav-item" onclick="switchTab('mes-cours')">
+                        <i class="fas fa-book-open"></i> <span>Mes Cours</span>
+                    </button>
+                    <button class="nav-item" onclick="switchTab('mes-absences')">
+                        <i class="fas fa-history"></i> <span>Mes Absences</span>
+                    </button>
+                    <button class="nav-item" onclick="switchTab('calendrier-stagiaire')">
+                        <i class="fas fa-calendar-alt"></i> <span>Dates des examens</span>
+                    </button>
+                    <button class="nav-item" onclick="switchTab('sujets-stagiaire')">
+                        <i class="fas fa-file-alt"></i> <span>Sujets des examens</span>
+                    </button>
+                    <button class="nav-item" onclick="switchTab('parametres-stagiaire')">
+                        <i class="fas fa-cog"></i> <span>Paramètres</span>
+                    </button>
+                    <button class="nav-item" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> <span>Déconnexion</span>
+                    </button>
+                </nav>
+            </aside>
 
-                <!-- Mes Cours -->
+            <main class="main-content">
+                <div id="mes-notes" class="tab-content active">
+                    <div class="page-header">
+                        <h2>Mes Résultats</h2>
+                    </div>
+                    <div class="glass content-card">
+                        <div class="table-responsive">
+                            <table id="mesNotesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Module</th>
+                                        <th>Type</th>
+                                        <th>Coef.</th>
+                                        <th>Contrôles</th>
+                                        <th>EFM</th>
+                                        <th>Moyenne</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Other Stagiaire Tabs -->
                 <div id="mes-cours" class="tab-content">
-                    <div class="card">
-                        <h3>Cours disponibles</h3>
+                    <div class="page-header">
+                        <h2>Mes Cours</h2>
+                    </div>
+                    <div class="glass content-card">
                         <table id="mesCoursList">
                             <thead>
                                 <tr>
                                     <th>Titre</th>
                                     <th>Module</th>
-                                    <th>Télécharger</th>
+                                    <th>Lien</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -902,1229 +689,120 @@
                     </div>
                 </div>
 
-                <!-- Mes Examens -->
-                <div id="mes-examens" class="tab-content">
-                    <div class="card">
-                        <h3>Sujets d'examen disponibles</h3>
-                        <table id="mesExamensList">
+                <div id="mes-absences" class="tab-content">
+                    <div class="page-header">
+                        <h2>Mes Absences</h2>
+                    </div>
+                    <div class="glass content-card">
+                        <div class="table-responsive">
+                            <table id="mesAbsencesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Horaire</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3">Aucune absence enregistrée.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendrier Stagiaire -->
+                <div id="calendrier-stagiaire" class="tab-content">
+                    <div class="page-header">
+                        <h2>Calendrier des Examens</h2>
+                    </div>
+                    <div class="glass content-card">
+                        <div class="timeline" id="calendrierListStagiaire">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sujets Stagiaire -->
+                <div id="sujets-stagiaire" class="tab-content">
+                    <div class="page-header">
+                        <h2>Sujets d'Examen</h2>
+                    </div>
+                    <div class="glass content-card">
+                        <table class="data-table" id="examensListStagiaire">
                             <thead>
                                 <tr>
                                     <th>Titre</th>
-                                    <th>Télécharger</th>
+                                    <!-- Module and Annee removed for Stagiaire -->
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody>
+                                <!-- Populated by JS -->
+                            </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Calendrier Examens -->
-                <div id="calendrier-examens" class="tab-content">
-                    <div class="card">
-                        <h3>📅 Mon calendrier d'examens</h3>
-                        <table id="monCalendrierExamens">
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Module</th>
-                                    <th>Date</th>
-                                    <th>Horaire</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                <!-- Paramètres Stagiaire -->
+                <div id="parametres-stagiaire" class="tab-content">
+                    <div class="page-header">
+                        <h2>Paramètres</h2>
                     </div>
-                </div>
-
-                <!-- Mes Absences -->
-                <div id="mes-absences" class="tab-content">
-                    <div class="card">
-                        <h3>Mon historique d'absences</h3>
-                        <div class="grid">
-                            <div class="stat-card">
-                                <h4>Total Séances Absentes</h4>
-                                <p id="monTotalAbsences">0</p>
-                            </div>
-                        </div>
-                        <table id="mesAbsencesTable">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Horaire</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Vacances Stagiaire -->
-                <div id="vacances-stagiaire" class="tab-content">
-                    <div class="card">
-                        <h3>🏖️ Calendrier des vacances</h3>
-                        <div id="vacancesStagiaireList"></div>
-                    </div>
-                </div>
-
-                <!-- Mon Compte -->
-                <div id="mon-compte" class="tab-content">
-                    <div class="card">
-                        <h3>Changer mon mot de passe</h3>
+                    <div class="glass content-card">
+                        <h3>Mon Profil</h3>
                         <div class="form-group">
-                            <label>Ancien mot de passe</label>
-                            <input type="password" id="stagiaireOldPassword">
+                            <label>Nom complet</label>
+                            <input type="text" id="paramsNomStagiaire" readonly
+                                style="opacity: 0.7; cursor: not-allowed;">
                         </div>
+
+                        <h3 style="margin-top: 30px;">Sécurité</h3>
                         <div class="form-group">
                             <label>Nouveau mot de passe</label>
-                            <input type="password" id="stagiaireNewPassword">
+                            <div class="password-wrapper">
+                                <input type="password" id="newPasswordStagiaire"
+                                    placeholder="Laisser vide pour ne pas changer">
+                            </div>
+                            <div class="password-wrapper" style="margin-top: 10px;">
+                                <input type="password" id="confirmNewPasswordStagiaire"
+                                    placeholder="Confirmer le nouveau mot de passe">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Confirmer le mot de passe</label>
-                            <input type="password" id="stagiaireConfirmPassword">
+
+                        <h3 style="margin-top: 30px;">Préférences</h3>
+                        <div class="form-group"
+                            style="display: flex; align-items: center; justify-content: space-between;">
+                            <label style="margin: 0;">Mode Sombre (Défaut)</label>
+                            <input type="checkbox" id="darkModeStagiaire" checked disabled style="width: auto;">
                         </div>
-                        <button class="btn" onclick="changerMotDePasseStagiaire()">Modifier</button>
+
+                        <button class="btn" onclick="saveSettingsStagiaire()" style="margin-top: 20px; width: 100%;">
+                            <i class="fas fa-save"></i> Enregistrer mes préférences
+                        </button>
                     </div>
                 </div>
-            </div>
+
+            </main>
         </div>
     </div>
 
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="assets/js/app_bundled.js"></script>
     <script>
-        // Données en mémoire (Cache local pour l'UI)
-        let currentUser = null;
-        let data = {
-            stagiaires: [],
-            modules: [],
-            notes: {},
-            absences: [],
-            cours: [],
-            examens: [],
-            datesExamens: [],
-            vacances: []
-        };
-
-        // --- Supabase Helpers ---
-        async function uploadFile(file) {
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2)}.${fileExt}`;
-            const filePath = `${fileName}`;
-
-            const { data, error } = await supabase.storage
-                .from('documents')
-                .upload(filePath, file);
-
-            if (error) {
-                console.error('Upload Error:', error);
-                alert('Erreur lors de l\'upload du fichier: ' + error.message);
-                return null;
-            }
-
-            const { data: { publicUrl } } = supabase.storage
-                .from('documents')
-                .getPublicUrl(filePath);
-
-            return publicUrl;
-        }
-
-        // --- Data Loading ---
-        async function loadData() {
-            // Afficher un loader si possible, sinon juste attendre
-            console.log('Chargement des données...');
-
-            try {
-                const [
-                    { data: stagiaires },
-                    { data: modules },
-                    { data: notes },
-                    { data: absences },
-                    { data: cours },
-                    { data: examens },
-                    { data: calendrier },
-                    { data: vacances }
-                ] = await Promise.all([
-                    supabase.from('stagiaires').select('*').limit(1000),
-                    supabase.from('modules').select('*').limit(1000),
-                    supabase.from('notes').select('*').limit(5000),
-                    supabase.from('absences').select('*').limit(5000),
-                    supabase.from('cours').select('*').limit(500),
-                    supabase.from('examens').select('*').limit(500),
-                    supabase.from('calendrier_examens').select('*').limit(500),
-                    supabase.from('vacances').select('*').limit(100)
-                ]);
-
-                // Mapping Stagiaires
-                data.stagiaires = stagiaires || [];
-
-                // Mapping Modules (snake_case -> camelCase)
-                data.modules = (modules || []).map(m => ({
-                    id: m.id,
-                    nom: m.nom,
-                    nbControles: m.nb_controles,
-                    annee: m.annee,
-                    type: m.type,
-                    coefficient: m.coefficient
-                }));
-
-                // Mapping Notes (Reconstruction de l'objet)
-                data.notes = {};
-                (notes || []).forEach(n => {
-                    const key = `${n.module_id}_${n.stagiaire_id}`;
-                    data.notes[key] = {
-                        controles: n.controles || [],
-                        efm: n.efm
-                    };
-                });
-
-                // Mapping Absences
-                data.absences = (absences || []).map(a => ({
-                    id: a.id,
-                    stagiaireId: a.stagiaire_id,
-                    date: a.date,
-                    horaire: a.horaire
-                }));
-
-                // Mapping Cours
-                data.cours = (cours || []).map(c => ({
-                    id: c.id,
-                    titre: c.titre,
-                    moduleId: c.module_id,
-                    annee: c.annee,
-                    description: c.description,
-                    fichierNom: c.fichier_nom,
-                    fichierTaille: c.fichier_taille,
-                    fichierData: c.fichier_url, // URL au lieu de Base64
-                    dateAjout: new Date(c.created_at).toLocaleDateString()
-                }));
-
-                // Mapping Examens
-                data.examens = (examens || []).map(e => ({
-                    id: e.id,
-                    titre: e.titre,
-                    moduleId: e.module_id,
-                    type: e.type,
-                    annee: e.annee,
-                    description: e.description,
-                    fichierNom: e.fichier_nom,
-                    fichierTaille: e.fichier_taille,
-                    fichierData: e.fichier_url,
-                    dateAjout: new Date(e.created_at).toLocaleDateString()
-                }));
-
-                // Mapping Calendrier
-                data.datesExamens = (calendrier || []).map(d => ({
-                    id: d.id,
-                    moduleId: d.module_id,
-                    type: d.type,
-                    date: d.date,
-                    horaire: `${d.heure_debut} → ${d.heure_fin}`.replace(/:00/g, ''),
-                    annee: d.annee,
-                    heureDebut: d.heure_debut,
-                    heureFin: d.heure_fin
-                }));
-
-                // Mapping Vacances
-                data.vacances = (vacances || []).map(v => ({
-                    id: v.id,
-                    titre: v.titre,
-                    description: v.description,
-                    fichierNom: 'Document',
-                    fichierTaille: '-',
-                    fichierData: v.fichier_url,
-                    datePublication: new Date(v.date_publication).toLocaleDateString()
-                }));
-
-                console.log('Données chargées:', data);
-
-                // Rafraîchir l'affichage si connecté
-                if (currentUser) {
-                    if (currentUser.role === 'formateur') {
-                        loadFormateurData();
-                    } else {
-                        loadStagiaireData();
-                    }
-                }
-
-            } catch (error) {
-                console.error("Erreur lors du chargement des données:", error);
-                alert("Erreur de connexion: " + (error.message || JSON.stringify(error)));
-            }
-        }
-
-        // Initialisation
-        function init() {
-            // on ne charge rien du localstorage
-        }
-
-        // Fonction vide car on sauvegarde directement en DB maintenant
-        function saveData() { }
-
-        // Connexion
-        async function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const error = document.getElementById('loginError');
-
-            error.style.display = 'none';
-
-            try {
-                // 1. Vérifier si c'est un formateur
-                const { data: formateurData, error: formateurError } = await supabase
-                    .from('formateurs')
-                    .select('*')
-                    .eq('username', username)
-                    .eq('password', password)
-                    .single();
-
-                if (formateurData) {
-                    currentUser = { ...formateurData, type: 'formateur', role: 'formateur' }; // Ensure compatibility
-                    await loadData();
-                    showDashboard('formateur');
-                    return;
-                }
-
-                // 2. Vérifier si c'est un stagiaire
-                const { data: stagiaireData, error: stagiaireError } = await supabase
-                    .from('stagiaires')
-                    .select('*')
-                    .eq('cin', username)
-                    .eq('password', password)
-                    .single();
-
-                if (stagiaireData) {
-                    currentUser = { ...stagiaireData, type: 'stagiaire', role: 'stagiaire' };
-                    await loadData();
-                    showDashboard('stagiaire');
-                    return;
-                }
-
-                // Si aucun user trouvé
-                error.textContent = 'Identifiant ou mot de passe incorrect';
-                error.style.display = 'block';
-
-            } catch (e) {
-                console.error("Login exception:", e);
-                // Enhanced error reporting
-                error.textContent = 'Erreur de connexion: ' + (e.message || e);
-                error.style.display = 'block';
-            }
-        }
-
-        function logout() {
-            currentUser = null;
-            document.getElementById('loginPage').style.display = 'block';
-            document.getElementById('formateurDashboard').style.display = 'none';
-            document.getElementById('stagiaireDashboard').style.display = 'none';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-        }
-
-        function showDashboard(type) {
-            document.getElementById('loginPage').style.display = 'none';
-            if (type === 'formateur') {
-                document.getElementById('formateurDashboard').style.display = 'block';
-                document.getElementById('formateurName').textContent = currentUser.nom;
-                loadFormateurData();
-            } else {
-                document.getElementById('stagiaireDashboard').style.display = 'block';
-                document.getElementById('stagiaireName').textContent = `${currentUser.nom} ${currentUser.prenom}`;
-                loadStagiaireData();
-            }
-        }
-
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById(tabName).classList.add('active');
-        }
-
-        // --- Date Hijri Helper ---
-        function getHijriYear() {
-            // Fallback simple ou utilisation de Intl
-            // Intl.DateTimeFormat avec calendar 'islamic-umalqura' est bien supporté
-            try {
-                const date = new Date();
-                const hijriDate = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', { year: 'numeric' }).format(date);
-                return hijriDate.split(' ')[0]; // Retourne juste l'année (ex: "1446")
-            } catch (e) {
-                console.error("Erreur calcul Hijri, fallback:", e);
-                return "1446"; // Fallback safe
-            }
-        }
-
-        // Import Stagiaires depuis Excel
-        function importStagiaires() {
-            const file = document.getElementById('excelFile').files[0];
-            const annee = document.getElementById('importAnnee').value;
-
-            if (!file) {
-                alert('Veuillez sélectionner un fichier Excel');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = async function (e) {
-                const data_xlsx = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data_xlsx, { type: 'array' });
-                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                const jsonData = XLSX.utils.sheet_to_json(firstSheet);
-
-                let compteur = 0;
-                let erreurs = 0;
-                const hijriYear = getHijriYear();
-
-                for (const row of jsonData) {
-                    const cin = row.CIN || row.cin;
-                    const nom = row.Nom || row.nom;
-                    const prenom = row.Prénom || row.Prenom || row.prenom;
-
-                    if (!cin || !nom || !prenom) continue;
-
-                    // Password format: CIN@HijriYear
-                    const defaultPassword = `${cin}@${hijriYear}`;
-
-                    const { error } = await supabase.from('stagiaires').insert({
-                        cin: cin.toString(),
-                        nom: nom,
-                        prenom: prenom,
-                        annee: annee,
-                        password: defaultPassword
-                    });
-
-                    if (!error) {
-                        compteur++;
-                    } else {
-                        console.error('Erreur import:', cin, error.message);
-                        erreurs++;
-                    }
-                }
-
-                await loadData();
-                alert(`${compteur} stagiaire(s) de ${annee} importé(s)! (${erreurs} erreurs)\nMot de passe par défaut : CIN@${hijriYear}`);
-            };
-            reader.readAsArrayBuffer(file);
-        }
-
-        function afficherStagiaires() {
-            const tbody = document.querySelector('#stagiairesList tbody');
-            const filter = document.getElementById('filterAnnee')?.value || '';
-            tbody.innerHTML = '';
-
-            const stagiairesFiltr = filter ? data.stagiaires.filter(s => s.annee === filter) : data.stagiaires;
-
-            // Sort alphabetically by Nom
-            stagiairesFiltr.sort((a, b) => a.nom.localeCompare(b.nom));
-
-            stagiairesFiltr.forEach(s => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${s.cin}</td>
-                        <td>${s.nom}</td>
-                        <td>${s.prenom}</td>
-                        <td><span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${s.annee}</span></td>
-                        <td>
-                            <button class="btn-small btn-delete" onclick="supprimerStagiaire('${s.id}')">Supprimer</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function supprimerStagiaire(id) {
-            if (confirm('Supprimer ce stagiaire?')) {
-                const { error } = await supabase.from('stagiaires').delete().eq('id', id);
-                if (error) {
-                    alert('Erreur: ' + error.message);
-                } else {
-                    await loadData();
-                }
-            }
-        }
-
-        // Modules
-        async function ajouterModule() {
-            const nom = document.getElementById('moduleName').value;
-            const nbControles = parseInt(document.getElementById('nbControles').value);
-            const annee = document.getElementById('moduleAnnee').value;
-            const type = document.getElementById('moduleType').value;
-            const coefficient = parseFloat(document.getElementById('moduleCoefficient').value);
-
-            if (!nom) {
-                alert('Veuillez entrer un nom de module');
-                return;
-            }
-
-            const { error } = await supabase.from('modules').insert({
-                nom: nom,
-                nb_controles: nbControles,
-                annee: annee,
-                type: type,
-                coefficient: coefficient
-            });
-
-            if (error) {
-                alert('Erreur: ' + error.message);
-            } else {
-                document.getElementById('moduleName').value = '';
-                await loadData();
-                alert('Module ajouté!');
-            }
-        }
-
-        function chargerModulesParAnnee() {
-            const annee = document.getElementById('notesAnnee').value;
-            const moduleSelect = document.getElementById('moduleSelect');
-
-            moduleSelect.innerHTML = '<option value="">-- Choisir un module --</option>';
-
-            if (annee) {
-                const modulesFiltr = data.modules.filter(m => m.annee === annee);
-                modulesFiltr.forEach(m => {
-                    moduleSelect.innerHTML += `<option value="${m.id}">${m.nom} (${m.type}, Coef: ${m.coefficient})</option>`;
-                });
-            }
-        }
-
-        function chargerNotesModule() {
-            const moduleId = document.getElementById('moduleSelect').value;
-            const annee = document.getElementById('notesAnnee').value;
-
-            if (!moduleId || !annee) return;
-
-            const module = data.modules.find(m => m.id === moduleId);
-            const stagiairesFiltres = data.stagiaires.filter(s => s.annee === annee);
-            const section = document.getElementById('notesSection');
-
-            let html = '<table><thead><tr><th>Stagiaire</th>';
-            for (let i = 1; i <= module.nbControles; i++) {
-                html += `<th>Contrôle ${i} (/20)</th>`;
-            }
-            html += '<th>EFM (/40)</th><th>Moyenne du module/20</th></tr></thead><tbody>';
-
-            stagiairesFiltres.forEach(s => {
-                const key = `${moduleId}_${s.id}`;
-                const notes = data.notes[key] || { controles: [], efm: '' };
-
-                html += `<tr><td>${s.nom} ${s.prenom}</td>`;
-                for (let i = 0; i < module.nbControles; i++) {
-                    const val = notes.controles[i] !== undefined ? notes.controles[i] : '';
-                    html += `<td><input type="number" min="0" max="20" step="0.5" value="${val}" 
-                             onchange="sauvegarderNote('${moduleId}', '${s.id}', 'controle', ${i}, this.value)" style="width:70px"></td>`;
-                }
-                const efmVal = notes.efm !== undefined && notes.efm !== null ? notes.efm : '';
-                html += `<td><input type="number" min="0" max="40" step="0.5" value="${efmVal}" 
-                         onchange="sauvegarderNote('${moduleId}', '${s.id}', 'efm', 0, this.value)" style="width:70px"></td>`;
-
-                const moyenne = calculerMoyenne(notes, module.nbControles);
-                html += `<td id="moyenne_${moduleId}_${s.id}"><strong>${moyenne}</strong></td></tr>`;
-            });
-
-            html += '</tbody></table>';
-            section.innerHTML = html;
-        }
-
-        async function sauvegarderNote(moduleId, stagiaireId, type, index, value) {
-            const key = `${moduleId}_${stagiaireId}`;
-            const currentNotes = data.notes[key] || { controles: [], efm: null };
-
-            let newControles = [...(currentNotes.controles || [])];
-            let newEfm = currentNotes.efm;
-
-            const valParsed = value === '' ? null : parseFloat(value);
-
-            if (type === 'controle') {
-                newControles[index] = valParsed;
-            } else {
-                newEfm = valParsed;
-            }
-
-            // Update local cache
-            if (!data.notes[key]) data.notes[key] = {};
-            data.notes[key].controles = newControles;
-            data.notes[key].efm = newEfm;
-
-            // Recalculate and update DOM immediately
-            const module = data.modules.find(m => m.id === moduleId);
-            const moyenne = calculerMoyenne(data.notes[key], module.nbControles);
-            const moyenneCell = document.getElementById(`moyenne_${moduleId}_${stagiaireId}`);
-            if (moyenneCell) {
-                moyenneCell.innerHTML = `<strong>${moyenne}</strong>`;
-            }
-
-            const { error } = await supabase.from('notes').upsert({
-                module_id: moduleId,
-                stagiaire_id: stagiaireId,
-                controles: newControles,
-                efm: newEfm
-            }, { onConflict: 'module_id,stagiaire_id' });
-
-            if (error) console.error('Erreur save note:', error);
-        }
-
-        function calculerMoyenne(notes, nbControles) {
-            if (notes.efm === null || notes.efm === undefined) return '-';
-
-            if (nbControles === 0) {
-                return (notes.efm / 2).toFixed(2);
-            }
-
-            let sommeControles = 0;
-            let nbControlesValides = 0;
-
-            for (let i = 0; i < nbControles; i++) {
-                if (notes.controles[i] !== null && notes.controles[i] !== undefined) {
-                    sommeControles += notes.controles[i];
-                    nbControlesValides++;
-                }
-            }
-
-            if (nbControlesValides === 0) return '-';
-
-            const moyenneControles = sommeControles / nbControlesValides;
-            const moyenne = (moyenneControles + notes.efm) / 3;
-            return moyenne.toFixed(2);
-        }
-
-        function chargerStagiairesParAnnee() {
-            const annee = document.getElementById('absenceAnnee').value;
-            const select = document.getElementById('absenceStagiaire');
-            select.innerHTML = '<option value="">-- Choisir un stagiaire --</option>';
-            if (annee) {
-                const stagiairesFiltres = data.stagiaires.filter(s => s.annee === annee);
-                stagiairesFiltres.forEach(s => {
-                    select.innerHTML += `<option value="${s.id}">${s.nom} ${s.prenom}</option>`;
-                });
-            }
-        }
-
-        async function ajouterAbsence() {
-            const stagiaireId = document.getElementById('absenceStagiaire').value;
-            const date = document.getElementById('absenceDate').value;
-            const horaire = document.getElementById('absenceHoraire').value;
-
-            if (!stagiaireId || !date) {
-                alert('Veuillez remplir tous les champs');
-                return;
-            }
-
-            const { error } = await supabase.from('absences').insert({
-                stagiaire_id: stagiaireId,
-                date: date,
-                horaire: horaire
-            });
-
-            if (error) {
-                alert('Erreur: ' + error.message);
-            } else {
-                alert('Absence enregistrée');
-                await loadData();
-            }
-        }
-
-        function afficherAbsences() {
-            const tbody = document.querySelector('#absencesTable tbody');
-            const filter = document.getElementById('filterAbsenceAnnee')?.value || '';
-            tbody.innerHTML = '';
-
-            const absencesParStagiaire = {};
-
-            data.stagiaires.forEach(s => {
-                if (!filter || s.annee === filter) {
-                    absencesParStagiaire[s.id] = {
-                        nom: `${s.nom} ${s.prenom}`,
-                        annee: s.annee,
-                        total: 0,
-                        details: []
-                    };
-                }
-            });
-
-            data.absences.forEach(a => {
-                if (absencesParStagiaire[a.stagiaireId]) {
-                    absencesParStagiaire[a.stagiaireId].total++;
-                    absencesParStagiaire[a.stagiaireId].details.push(a);
-                }
-            });
-
-            Object.entries(absencesParStagiaire).forEach(([id, info]) => {
-                if (info.total > 0) {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${info.nom}</td>
-                            <td><span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${info.annee}</span></td>
-                            <td>${info.total}</td>
-                            <td><button class="btn-small" onclick="voirDetailsAbsences('${id}')">Voir</button></td>
-                        </tr>
-                    `;
-                }
-            });
-        }
-
-        function voirDetailsAbsences(stagiaireId) {
-            const absences = data.absences.filter(a => a.stagiaireId === stagiaireId);
-            const stagiaire = data.stagiaires.find(s => s.id === stagiaireId);
-            let msg = `Absences de ${stagiaire.nom} ${stagiaire.prenom}:\n\n`;
-            absences.forEach(a => {
-                msg += `${a.date} - Horaire: ${a.horaire}\n`;
-            });
-            alert(msg);
-        }
-
-        async function ajouterCours() {
-            const titre = document.getElementById('coursTitle').value;
-            const moduleId = document.getElementById('coursModule').value;
-            // Removed Description
-            const fileInput = document.getElementById('coursFile');
-            const annee = document.getElementById('coursAnnee').value;
-
-            if (!titre || !moduleId || !fileInput.files[0]) {
-                alert('Veuillez remplir tous les champs et sélectionner un fichier');
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const url = await uploadFile(file);
-
-            if (!url) return;
-
-            const { error } = await supabase.from('cours').insert({
-                titre: titre,
-                module_id: moduleId,
-                annee: annee,
-                description: null, // Removed input
-                fichier_url: url,
-                fichier_nom: file.name,
-                fichier_taille: formatFileSize(file.size)
-            });
-
-            if (error) {
-                alert('Erreur DB: ' + error.message);
-            } else {
-                alert('Cours publié!');
-                document.getElementById('coursTitle').value = '';
-                await loadData();
-            }
-        }
-
-        function afficherCours() {
-            const tbody = document.querySelector('#coursList tbody');
-            const filter = document.getElementById('filterCoursAnnee')?.value || '';
-            tbody.innerHTML = '';
-
-            const coursFiltres = filter ? data.cours.filter(c => c.annee === filter) : data.cours;
-
-            coursFiltres.forEach(c => {
-                const module = data.modules.find(m => m.id === c.moduleId);
-                const fileLink = c.fichierData.startsWith('http') ?
-                    `<a href="${c.fichierData}" target="_blank">📄 ${c.fichierNom}</a>` : c.fichierNom;
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${c.titre}</td>
-                        <td>${module ? module.nom : 'N/A'}</td>
-                        <td><span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${c.annee}</span></td>
-                        <td>${fileLink}</td>
-                        <td>${c.fichierTaille}</td>
-                        <td>
-                            <button class="btn-small btn-delete" onclick="supprimerCours('${c.id}')">Supprimer</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function supprimerCours(id) {
-            if (confirm('Supprimer ce cours?')) {
-                const { error } = await supabase.from('cours').delete().eq('id', id);
-                if (error) alert('Erreur: ' + error.message);
-                else await loadData();
-            }
-        }
-
-        async function ajouterExamen() {
-            const titre = document.getElementById('examenTitle').value;
-            const annee = document.getElementById('examenAnnee').value;
-
-            if (!titre) {
-                alert('Veuillez remplir le titre');
-                return;
-            }
-
-            // Restored file upload logic
-            const fileInput = document.getElementById('examenFile');
-
-            if (!titre || !fileInput.files[0]) {
-                alert('Veuillez remplir le titre et sélectionner un fichier');
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const url = await uploadFile(file);
-            if (!url) return;
-
-            const { error } = await supabase.from('examens').insert({
-                titre: titre,
-                module_id: null,
-                type: 'Autre',
-                annee: annee,
-                description: null,
-                fichier_url: url,
-                fichier_nom: file.name,
-                fichier_taille: formatFileSize(file.size)
-            });
-
-            if (error) alert('Erreur DB: ' + error.message);
-            else {
-                alert('Examen publié!');
-                document.getElementById('examenTitle').value = '';
-                await loadData();
-            }
-        }
-
-        function afficherExamens() {
-            const tbody = document.querySelector('#examensList tbody');
-            const filter = document.getElementById('filterExamenAnnee')?.value || '';
-            tbody.innerHTML = '';
-
-            const examensFiltres = filter ? data.examens.filter(e => e.annee === filter) : data.examens;
-
-            examensFiltres.forEach(e => {
-                const fileLink = e.fichierData.startsWith('http') ?
-                    `<a href="${e.fichierData}" target="_blank">📄 ${e.fichierNom}</a>` : e.fichierNom;
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${e.titre}</td>
-                        <td><span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${e.annee}</span></td>
-                        <td>${fileLink}</td>
-                        <td>${e.fichierTaille}</td>
-                        <td>
-                            <button class="btn-small btn-delete" onclick="supprimerExamen('${e.id}')">Supprimer</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function supprimerExamen(id) {
-            if (confirm('Supprimer ce sujet d\'examen?')) {
-                const { error } = await supabase.from('examens').delete().eq('id', id);
-                if (error) alert(error.message);
-                else await loadData();
-            }
-        }
-
-        function toggleModuleSelection() {
-            const type = document.getElementById('typeExamen').value;
-            const moduleGroup = document.getElementById('moduleSelectionGroup');
-            if (type === 'EFF') {
-                moduleGroup.style.display = 'none';
-            } else {
-                moduleGroup.style.display = 'block';
-            }
-        }
-
-        async function ajouterDateExamen() {
-            const annee = document.getElementById('dateExamenAnnee').value;
-            const type = document.getElementById('typeExamen').value;
-            let moduleId = document.getElementById('dateExamenModule').value;
-            const date = document.getElementById('dateExamen').value;
-            const heureDebut = document.getElementById('heureDebut').value;
-            const heureFin = document.getElementById('heureFin').value;
-
-            // For EFF, module is not required/relevant
-            if (type === 'EFF') {
-                moduleId = null;
-            } else if (!moduleId) {
-                alert('Veuillez sélectionner un module');
-                return;
-            }
-
-            if (!date || !heureDebut || !heureFin) {
-                alert('Veuillez remplir tous les champs');
-                return;
-            }
-
-            const { error } = await supabase.from('calendrier_examens').insert({
-                module_id: moduleId,
-                type: type,
-                date: date,
-                heure_debut: heureDebut,
-                heure_fin: heureFin,
-                annee: annee
-            });
-
-            if (error) alert(error.message);
-            else {
-                alert('Date ajoutée');
-                await loadData();
-            }
-        }
-
-        function afficherDatesExamens() {
-            const tbody = document.querySelector('#datesExamensList tbody');
-            const filter = document.getElementById('filterDateExamenAnnee')?.value || '';
-            tbody.innerHTML = '';
-
-            const datesFiltrees = filter ? data.datesExamens.filter(d => d.annee === filter) : data.datesExamens;
-            datesFiltrees.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-            datesFiltrees.forEach(d => {
-                const module = data.modules.find(m => m.id === d.moduleId);
-                const badgeColor = d.type === 'Contrôle' ? '#28a745' : d.type === 'EFM' ? '#fd7e14' : '#dc3545';
-                tbody.innerHTML += `
-                    <tr>
-                        <td><span style="background: ${badgeColor}; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${d.type}</span></td>
-                        <td>${module ? module.nom : 'N/A'}</td>
-                        <td><span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${d.annee}</span></td>
-                        <td>${d.date}</td>
-                        <td>⏰ ${d.horaire}</td>
-                        <td>
-                            <button class="btn-small btn-delete" onclick="supprimerDateExamen('${d.id}')">Supprimer</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function supprimerDateExamen(id) {
-            if (confirm('Supprimer cette date?')) {
-                const { error } = await supabase.from('calendrier_examens').delete().eq('id', id);
-                if (error) alert(error.message);
-                else await loadData();
-            }
-        }
-
-        async function ajouterVacances() {
-            const titre = document.getElementById('vacancesTitle').value;
-            const fileInput = document.getElementById('vacancesFile');
-
-            if (!titre || !fileInput.files[0]) {
-                alert('Veuillez remplir le titre et sélectionner un fichier');
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const url = await uploadFile(file);
-            if (!url) return;
-
-            const { error } = await supabase.from('vacances').insert({
-                titre: titre,
-                description: null,
-                fichier_url: url
-            });
-
-            if (error) alert(error.message);
-            else {
-                alert('Vacances publiées');
-                await loadData();
-            }
-        }
-
-        function afficherVacances() {
-            const tbody = document.querySelector('#vacancesList tbody');
-            tbody.innerHTML = '';
-
-            data.vacances.forEach(v => {
-                const fileLink = v.fichierData.startsWith('http') ?
-                    `<a href="${v.fichierData}" target="_blank">📄 Document</a>` : v.fichierNom;
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${v.titre}</td>
-                        <td>${fileLink}</td>
-                        <td>${v.datePublication}</td>
-                        <td>
-                            <button class="btn-small btn-download" onclick="telechargerVacances('${v.id}')">Voir</button>
-                            <button class="btn-small btn-delete" onclick="supprimerVacances('${v.id}')">Supprimer</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function supprimerVacances(id) {
-            if (confirm('Supprimer?')) {
-                const { error } = await supabase.from('vacances').delete().eq('id', id);
-                if (error) alert(error.message);
-                else await loadData();
-            }
-        }
-
-        function telechargerVacances(id) {
-            const vacance = data.vacances.find(v => v.id === id);
-            if (vacance && vacance.fichierData.startsWith('http')) {
-                window.open(vacance.fichierData, '_blank');
-            }
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 B';
-            const k = 1024;
-            const sizes = ['B', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
-        }
-
-        async function changerMotDePasse() {
-            const old = document.getElementById('oldPassword').value;
-            const newPass = document.getElementById('newPassword').value;
-            const confirm = document.getElementById('confirmPassword').value;
-
-            if (data.users && data.users.formateur && old !== data.users.formateur.password) {
-                // Fallback if data.users.formateur exists locally (compatibility)
-                // But we should prioritize currentUser check
-            }
-
-            // Verify old password (although we should probably trust currentUser if we updated it securely, 
-            // but for extra security we can re-verify with DB or just trust local currentUser for this session)
-            if (currentUser.password !== old) {
-                alert('Ancien mot de passe incorrect');
-                return;
-            }
-
-            if (newPass !== confirm) {
-                alert('Les mots de passe ne correspondent pas');
-                return;
-            }
-            if (newPass.length < 6) {
-                alert('Le mot de passe doit contenir au moins 6 caractères');
-                return;
-            }
-
-            // Update in Supabase
-            const { error } = await supabase.from('formateurs')
-                .update({ password: newPass })
-                .eq('id', currentUser.id); // Use ID to be safe
-
-            if (error) {
-                alert('Erreur modification mot de passe: ' + error.message);
-            } else {
-                currentUser.password = newPass; // Update local session
-                alert('Mot de passe modifié avec succès!');
-            }
-        }
-
-        async function changerMotDePasseStagiaire() {
-            const old = document.getElementById('stagiaireOldPassword').value;
-            const newPass = document.getElementById('stagiaireNewPassword').value;
-            const confirm = document.getElementById('stagiaireConfirmPassword').value;
-
-            if (old !== currentUser.password) {
-                alert('Ancien mot de passe incorrect');
-                return;
-            }
-            if (newPass !== confirm) {
-                alert('Les mots de passe ne correspondent pas');
-                return;
-            }
-            if (newPass.length < 6) {
-                alert('Minimum 6 caractères');
-                return;
-            }
-
-            const { error } = await supabase.from('stagiaires')
-                .update({ password: newPass })
-                .eq('id', currentUser.id);
-
-            if (error) alert(error.message);
-            else {
-                currentUser.password = newPass;
-                alert('Mot de passe modifié!');
-                const st = data.stagiaires.find(s => s.id === currentUser.id);
-                if (st) st.password = newPass;
-            }
-        }
-
-        function chargerStagiairesReset() {
-            const annee = document.getElementById('resetAnnee').value;
-            const select = document.getElementById('resetStagiaire');
-            select.innerHTML = '<option value="">-- Choisir un stagiaire --</option>';
-            if (annee) {
-                const stagiairesFiltres = data.stagiaires.filter(s => s.annee === annee);
-                stagiairesFiltres.forEach(s => {
-                    select.innerHTML += `<option value="${s.id}">${s.nom} ${s.prenom} (CIN: ${s.cin})</option>`;
-                });
-            }
-        }
-
-        async function reinitialiserMotDePasse() {
-            const stagiaireId = document.getElementById('resetStagiaire').value;
-            if (!stagiaireId) {
-                alert('Veuillez sélectionner un stagiaire');
-                return;
-            }
-
-            const stagiaire = data.stagiaires.find(s => s.id === stagiaireId);
-            const hijriYear = getHijriYear();
-            const newPassword = `${stagiaire.cin}@${hijriYear}`;
-
-            if (confirm(`Réinitialiser le mot de passe de ${stagiaire.nom} à ${newPassword}?`)) {
-                const { error } = await supabase.from('stagiaires')
-                    .update({ password: newPassword })
-                    .eq('id', stagiaireId);
-
-                if (error) alert(error.message);
-                else {
-                    alert(`Mot de passe réinitialisé: ${newPassword}`);
-                    await loadData();
-                }
-            }
-        }
-
-
-
-        function loadFormateurData() {
-            document.getElementById('totalStagiaires').textContent = data.stagiaires.length;
-            document.getElementById('totalModules').textContent = data.modules.length;
-            document.getElementById('totalCours').textContent = data.cours.length;
-            document.getElementById('totalExamens').textContent = data.examens.length;
-
-            afficherStagiaires();
-
-            const modulesSelects = ['coursModule', 'dateExamenModule'];
-            modulesSelects.forEach(selectId => {
-                const select = document.getElementById(selectId);
-                select.innerHTML = '<option value="">-- Choisir un module --</option>';
-                data.modules.forEach(m => {
-                    select.innerHTML += `<option value="${m.id}">${m.nom} (${m.annee})</option>`;
-                });
-            });
-
-            afficherAbsences();
-            afficherCours();
-            afficherExamens();
-            afficherDatesExamens();
-            afficherVacances();
-        }
-
-        function loadStagiaireData() {
-            const annee = currentUser.annee;
-
-            // Mes notes
-            const tbody = document.querySelector('#mesNotesTable tbody');
-            tbody.innerHTML = '';
-
-            const mesModules = data.modules.filter(m => m.annee === annee);
-
-            mesModules.forEach(m => {
-                const key = `${m.id}_${currentUser.id}`;
-                const notes = data.notes[key] || { controles: [], efm: null };
-
-                const nbControles = m.nbControles || 0;
-
-                let cHtml = '';
-                for (let i = 0; i < nbControles; i++) {
-                    cHtml += notes.controles[i] ? `Contrôle ${i + 1}: ${notes.controles[i]}/20<br>` : `Contrôle ${i + 1}: -<br>`;
-                }
-
-                const moyenne = calculerMoyenne(notes, nbControles);
-                const typeColor = m.type === 'Local' ? '#28a745' : '#dc3545';
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${m.nom}</td>
-                        <td><span style="background: ${typeColor}; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${m.type}</span></td>
-                        <td><strong>${m.coefficient}</strong></td>
-                        <td>${cHtml || 'Aucun contrôle'}</td>
-                        <td>${notes.efm ? notes.efm : '-'}</td>
-                        <td><strong>${moyenne}</strong></td>
-                    </tr>
-                `;
-            });
-
-            // Mes cours
-            const coursTbody = document.querySelector('#mesCoursList tbody');
-            coursTbody.innerHTML = '';
-            const mesCours = data.cours.filter(c => c.annee === annee);
-            mesCours.forEach(c => {
-                const module = data.modules.find(m => m.id === c.moduleId);
-                const link = c.fichierData.startsWith('http') ? c.fichierData : '#';
-
-                coursTbody.innerHTML += `
-                    <tr>
-                        <td>${c.titre}</td>
-                        <td>${module ? module.nom : 'N/A'}</td>
-                        <td><a href="${link}" target="_blank" class="btn-small btn-download">📥 Télécharger</a></td>
-                    </tr>
-                `;
-            });
-
-            // Mes examens
-            const examensTbody = document.querySelector('#mesExamensList tbody');
-            examensTbody.innerHTML = '';
-            const mesExamens = data.examens.filter(e => e.annee === annee);
-            mesExamens.forEach(e => {
-                const link = e.fichierData.startsWith('http') ? e.fichierData : '#';
-
-                examensTbody.innerHTML += `
-                    <tr>
-                        <td>${e.titre}</td>
-                        <td><a href="${link}" target="_blank" class="btn-small btn-download">📥 Télécharger</a></td>
-                    </tr>
-                `;
-            });
-
-            // Calendrier examens
-            const calendrierTbody = document.querySelector('#monCalendrierExamens tbody');
-            calendrierTbody.innerHTML = '';
-            const mesDatesExamens = data.datesExamens.filter(d => d.annee === annee).sort((a, b) => new Date(a.date) - new Date(b.date));
-            mesDatesExamens.forEach(d => {
-                const module = data.modules.find(m => m.id === d.moduleId);
-                const badgeColor = d.type === 'Contrôle' ? '#28a745' : d.type === 'EFM' ? '#fd7e14' : '#dc3545';
-                calendrierTbody.innerHTML += `
-                    <tr>
-                        <td><span style="background: ${badgeColor}; color: white; padding: 4px 12px; border-radius: 15px; font-size: 12px;">${d.type}</span></td>
-                        <td>${module ? module.nom : 'N/A'}</td>
-                        <td>${d.date}</td>
-                        <td>⏰ ${d.horaire}</td>
-                    </tr>
-                `;
-            });
-
-            // Mes absences
-            const mesAbsences = data.absences.filter(a => a.stagiaireId === currentUser.id);
-            document.getElementById('monTotalAbsences').textContent = mesAbsences.length;
-            const absencesTbody = document.querySelector('#mesAbsencesTable tbody');
-            absencesTbody.innerHTML = '';
-            mesAbsences.forEach(a => {
-                absencesTbody.innerHTML += `
-                    <tr>
-                        <td>${a.date}</td>
-                        <td>⏰ ${a.horaire}</td>
-                    </tr>
-                `;
-            });
-
-            const vacancesDiv = document.getElementById('vacancesStagiaireList');
-            if (data.vacances.length === 0) {
-                vacancesDiv.innerHTML = '<p style="color: #666;">Aucun calendrier de vacances publié pour le moment.</p>';
-            } else {
-                let html = '';
-                data.vacances.forEach(v => {
-                    const downloadBtn = v.fichierData.startsWith('http') ?
-                        `<a href="${v.fichierData}" target="_blank" class="vacances-download-btn">📥 Télécharger/Voir</a>` : '';
-
-                    html += `
-                        <div class="vacances-card">
-                            <div class="vacances-card-title">📅 ${v.titre}</div>
-
-                            <div class="vacances-card-meta">
-                                <div class="vacances-card-meta-item"><strong>📆 Publié le:</strong> ${v.datePublication}</div>
-                            </div>
-                            <div class="vacances-card-actions">${downloadBtn}</div>
-                        </div>
-                    `;
-                });
-                vacancesDiv.innerHTML = html;
-            }
-        }
-
-        function telechargerFichier(id, type) { }
-
-        // Init
-        init();
+        // Init logic for modules select population
+        // Since loadData is async, we might need a way to populate selects after data load
+        // We will add a listener or call it from app.js logic
+
+        // Simple auto-run init if needed
+        document.addEventListener('DOMContentLoaded', () => {
+            // Optional: Check if session exists (simplified in app.js via currentUser variables)
+        });
     </script>
 </body>
 
