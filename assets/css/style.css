@@ -903,3 +903,159 @@ input[type="file"]:hover {
         padding: 20px 15px;
     }
 }
+
+/* =========================================
+   Optimisation pour Smarphones (max-width: 480px)
+   ========================================= */
+@media (max-width: 480px) {
+
+    /* 1. Layout & Container Global */
+    .container {
+        margin: 0;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    .main-content {
+        padding: 15px 10px;
+    }
+
+    .content-card {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .glass {
+        border-radius: 0;
+        /* Plus d'espace sur très petits écrans */
+        border-left: none;
+        border-right: none;
+    }
+
+    /* 2. Typographie Adaptée */
+    .page-header h2 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    /* 3. Navigation Mobile Optimisée */
+    .mobile-header {
+        padding: 15px;
+    }
+
+    .mobile-header h3 {
+        font-size: 1rem;
+    }
+
+    /* Ajustement de la barre de navigation du bas */
+    .sidebar {
+        padding: 5px;
+    }
+
+    .nav-item {
+        padding: 8px 5px;
+    }
+
+    .nav-item i {
+        font-size: 1.1rem;
+        margin-bottom: 3px;
+    }
+
+    .nav-item span {
+        font-size: 9px;
+    }
+
+    /* 4. Tableaux Responsive (Scroll Horizontal) */
+    .table-responsive {
+        margin: 0 -15px;
+        /* Débordement contrôlé */
+        padding: 0 15px;
+        width: calc(100% + 30px);
+    }
+
+    table {
+        min-width: unset;
+        /* Laisser le tableau prendre sa place */
+        width: 100%;
+        font-size: 0.8rem;
+    }
+
+    th,
+    td {
+        padding: 10px 5px;
+    }
+
+    /* 5. Formulaires en Colonne Unique */
+    .grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px;
+        font-size: 0.95rem;
+        /* Évite le zoom auto sur iOS */
+    }
+
+    /* 6. Cartes d'Information Compactes */
+    .info-card {
+        min-height: 90px;
+        padding: 15px;
+    }
+
+    .info-card h4 {
+        font-size: 0.8rem;
+    }
+
+    .info-card p {
+        font-size: 1.8rem;
+    }
+
+    .info-card i {
+        font-size: 1.2rem !important;
+        top: 15px !important;
+        right: 15px !important;
+    }
+
+    /* 7. Boutons Tactiles */
+    .btn {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    /* Login Page Mobile */
+    .login-container {
+        padding: 2rem 1rem;
+    }
+
+    /* Ajustements Dashboard Stagiaire Spécifiques */
+    #stagiaireDashboard .sidebar {
+        padding: 5px;
+    }
+
+    #stagiaireDashboard .nav-item {
+        min-width: 60px;
+    }
+
+    /* Cacher certaines colonnes moins importantes sur très petits écrans si nécessaire */
+    /* Exemple: cacher la colonne 'Horaire' des absences si trop serré, ou réduire la police */
+}
