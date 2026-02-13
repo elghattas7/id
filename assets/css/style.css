@@ -772,19 +772,22 @@ input[type="file"]:hover {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 6px 2px;
+        padding: 4px 2px;
+        /* Reduced vertical padding */
         background: transparent;
         color: var(--text-secondary);
         border-radius: 8px;
-        font-size: 0.7rem;
+        font-size: 0.6rem;
+        /* Smaller font */
         height: auto;
         text-align: center;
         width: auto;
     }
 
     .nav-item i {
-        font-size: 1.1rem;
-        margin-bottom: 3px;
+        font-size: 0.9rem;
+        /* Smaller icon */
+        margin-bottom: 2px;
     }
 
     .nav-item span {
@@ -1037,8 +1040,8 @@ input[type="file"]:hover {
     #stagiaireDashboard .nav-item {
         flex: 0 0 calc(20% - 6px);
         flex-direction: column;
-        padding: 6px 2px;
-        font-size: 0.7rem;
+        padding: 4px 2px;
+        font-size: 0.6rem;
         gap: 2px;
         width: auto;
         justify-content: center;
@@ -1048,7 +1051,7 @@ input[type="file"]:hover {
     }
 
     #stagiaireDashboard .nav-item i {
-        font-size: 1.1rem;
+        font-size: 0.9rem;
         margin-bottom: 2px;
     }
 
