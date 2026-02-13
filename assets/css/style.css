@@ -903,22 +903,17 @@ input[type="file"]:hover {
 
 #stagiaireDashboard .sidebar {
     display: flex;
-    /* Changed from none to flex - show as horizontal top bar */
     width: 100%;
     height: auto;
     flex-direction: column;
-    /* Changed: Stack items vertically */
     flex-shrink: 1;
-    /* Added: Override default flex-shrink: 0 */
     padding: 15px 20px;
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
     align-items: center;
-    /* Added: Center items horizontally */
     gap: 15px;
-    /* Added: Space between user-info and menu */
 }
 
 #stagiaireDashboard .sidebar-header {
@@ -937,35 +932,29 @@ input[type="file"]:hover {
 
 #stagiaireDashboard .user-info {
     display: flex;
-    /* Changed: Show user info */
-    /* Added: Hide user info to remove left sidebar space */
     margin-right: 0;
-    /* Changed: Remove right margin */
     margin-bottom: 0;
     flex-shrink: 0;
     background: rgba(255, 255, 255, 0.05);
     padding: 12px 20px;
-    /* Increased padding */
     border-radius: 12px;
+    order: 2;
+    /* Show after nav-links */
 }
 
 #stagiaireDashboard .nav-links {
     flex-direction: row;
     flex: 0;
-    /* Changed: Don't grow, just wrap content */
     width: 100%;
-    /* Added: Take full width */
     overflow-x: visible;
-    /* Changed from auto to visible */
     overflow-y: visible;
     gap: 8px;
     align-items: center;
     justify-content: center;
-    /* Added: Center menu items */
     flex-wrap: wrap;
-    /* Added: Allow items to wrap on multiple lines */
     max-height: none;
-    /* Added: Remove height restriction */
+    order: 1;
+    /* Show first */
 }
 
 #stagiaireDashboard .nav-item {
@@ -1051,17 +1040,19 @@ input[type="file"]:hover {
     }
 
     #stagiaireDashboard .nav-item i {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         margin-bottom: 2px;
     }
 
     #stagiaireDashboard .nav-item span {
-        font-size: 0.65rem;
+        font-size: 0.55rem;
         display: block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
         max-width: 100%;
+        line-height: 1.2;
+        text-align: center;
     }
 
     #stagiaireDashboard .nav-item.active {
@@ -1070,14 +1061,7 @@ input[type="file"]:hover {
         border-radius: 4px 12px 12px 4px;
     }
 
-    #stagiaireDashboard .nav-item i {
-        font-size: 1.2rem;
-    }
 
-    #stagiaireDashboard .nav-item span {
-        display: block;
-        font-size: 0.95rem;
-    }
 
     #stagiaireDashboard .main-content {
         padding: 20px 15px;
