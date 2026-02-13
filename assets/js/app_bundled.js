@@ -917,63 +917,59 @@ function ajouterExamen() {
 
     const file = fileInput.files[0];
 
-    // Generate unique file path
-    const filePath = `examens/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+        // Use FileReader to convert to Base64 (No Bucket required)
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
 
-    // Upload to Supabase Storage
-    supabase.storage.from('examens').upload(filePath, file)
-        .then(({ data: uploadData, error: uploadError }) => {
-            if (uploadError) {
-                console.error('Error uploading file:', uploadError);
-                alert("Erreur lors de l'upload du fichier: " + uploadError.message);
-                return;
-            }
+    reader.onload = function () {
+        const base64Data = reader.result;
 
-            // Get Public URL
-            const { data: urlData } = supabase.storage.from('examens').getPublicUrl(filePath);
-            const publicURL = urlData.publicUrl;
-
-            // Insert into Supabase 'examens' table
-            return supabase.from('examens').insert([{
-                titre: titre,
-                annee: annee,
-                fichier_nom: file.name,
-                fichier_url: publicURL
-            }]).then(({ error }) => {
-                if (error) {
-                    console.error('Error inserting sujet:', error);
-                    alert("Erreur base de données: " + error.message);
+        // Insert into Supabase 'examens' table
+        supabase.from('examens').insert([{
+            titre: titre,
+            annee: annee,
+            fichier_nom: file.name,
+            fichier_url: base64Data // Storing the full Data URI
+        }]).then(({ error }) => {
+            if (error) {
+                console.error('Error inserting sujet:', error);
+                if (error.message && error.message.includes('payload')) {
+                    alert("Erreur: Le fichier est trop volumineux pour être enregistré sans bucket.");
                 } else {
-                    // Update local data
-                    const newExamen = {
-                        id: Date.now(), // Temporary ID until refresh
-                        titre: titre,
-                        annee: annee,
-                        fichierData: publicURL,
-                        fichierNom: file.name,
-                        dateAjout: new Date().toLocaleDateString()
-                    };
-
-                    if (!data.examens) data.examens = [];
-                    data.examens.push(newExamen);
-
-                    afficherSujets();
-                    if (document.getElementById('examensListStagiaire')) {
-                        afficherSujets('examensListStagiaire');
-                    }
-
-                    // Reset form
-                    document.getElementById('examenTitre').value = '';
-                    fileInput.value = '';
-
-                    alert("Sujet d'examen ajouté et enregistré !");
+                    alert("Erreur base de données: " + error.message);
                 }
-            });
-        })
-        .catch(err => {
-            console.error('Unexpected error:', err);
-            alert("Une erreur inattendue est survenue.");
+            } else {
+                // Update local data
+                const newExamen = {
+                    id: Date.now(), // Temporary ID until refresh
+                    titre: titre,
+                    annee: annee,
+                    fichierData: base64Data,
+                    fichierNom: file.name,
+                    dateAjout: new Date().toLocaleDateString()
+                };
+
+                if (!data.examens) data.examens = [];
+                data.examens.push(newExamen);
+
+                afficherSujets();
+                if (document.getElementById('examensListStagiaire')) {
+                    afficherSujets('examensListStagiaire');
+                }
+
+                // Reset form
+                document.getElementById('examenTitre').value = '';
+                fileInput.value = '';
+
+                alert("Sujet d'examen ajouté et enregistré !");
+            }
         });
+    };
+
+    reader.onerror = function (error) {
+        console.error('Error reading file:', error);
+        alert("Erreur lors de la lecture du fichier.");
+    };
 }
 
 // Formateur Data Loader Helper
