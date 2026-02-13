@@ -1382,3 +1382,33 @@ function chargerModulesPublication() {
         console.log('No year selected or no modules data');
     }
 }
+// --- Mobile Menu Logic ---
+function toggleMobileMenu() {
+    const sidebar = document.querySelector('.dashboard[style*="block"] .sidebar');
+    const overlay = document.getElementById('mobileOverlay');
+
+    if (sidebar) {
+        sidebar.classList.toggle('active');
+    }
+
+    if (overlay) {
+        overlay.classList.toggle('active');
+    }
+}
+
+// Auto-close mobile menu when clicking a nav item
+document.addEventListener('DOMContentLoaded', () => {
+    // Delegate event for dynamic elements or existing ones
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.nav-item')) {
+            const sidebar = document.querySelector('.dashboard[style*="block"] .sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+
+            // Only if we are in mobile mode (sidebar has active class or overlay is visible)
+            if (sidebar && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+            }
+        }
+    });
+});

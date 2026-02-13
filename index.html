@@ -98,8 +98,19 @@
                 </aside>
 
                 <!-- Mobile Header (Visible on mobile only) -->
-                <div class="mobile-header lg-hidden"> <!-- Added via CSS Media rule Logic -->
+                <div class="mobile-header lg-hidden">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <button class="mobile-nav-toggle" onclick="toggleMobileMenu()">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <h3 style="margin: 0; color: white;">Menu</h3>
+                    </div>
+                    <div class="user-avatar-mobile"
+                        style="width: 35px; height: 35px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem;">
+                        <i class="fas fa-user"></i>
+                    </div>
                 </div>
+                <div id="mobileOverlay" class="mobile-overlay" onclick="toggleMobileMenu()"></div>
 
                 <!-- Main Content -->
                 <main class="main-content">
