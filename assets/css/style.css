@@ -141,6 +141,13 @@ body {
     }
 }
 
+/* Utility to hide on large screens */
+@media (min-width: 769px) {
+    .lg-hidden {
+        display: none !important;
+    }
+}
+
 /* Container */
 .container {
     width: 100%;
@@ -1010,7 +1017,16 @@ input[type="file"]:hover {
         left: 0;
     }
 
-    #stagiaireDashboard .sidebar-header,
+    #stagiaireDashboard .sidebar-header {
+        display: none;
+    }
+
+    #stagiaireDashboard .mobile-header {
+        display: flex !important;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
     #stagiaireDashboard .user-info {
         display: flex;
         /* Show user info in drawer */
