@@ -3,6 +3,14 @@
  * Logic moved from index.html to app.js
  */
 
+// Initialize Theme immediately
+(function () {
+    const isDarkMode = localStorage.getItem('theme') !== 'light';
+    if (!isDarkMode) {
+        document.body.classList.add('light-mode');
+    }
+})();
+
 const SUPABASE_URL = 'https://ugnirkolwlqblcnamthe.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnbmlya29sd2xxYmxjbmFtdGhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzMDM1NzgsImV4cCI6MjA4MDg3OTU3OH0.oaCSXl5bPSqn-m1IsQiWcji7YzJBkeaTaHfq6uoHV-U';
 
@@ -320,7 +328,7 @@ function showDashboard(type) {
         console.log('Formateur dashboard computed display:', window.getComputedStyle(formateurDash).display);
         console.log('Formateur dashboard visibility:', window.getComputedStyle(formateurDash).visibility);
 
-        document.getElementById('formateurName').textContent = currentUser.nom;
+        // document.getElementById('formateurName').textContent = currentUser.nom; // Removed: Hide formateur name
         chargerModulesPublication(); // Initialize module list
         switchTab('vue-ensemble');
     } else {
@@ -1068,7 +1076,7 @@ function loadStagiaireData() {
                     <tr>
                         <td>${c.titre}</td>
                         <td>${module ? module.nom : '-'}</td>
-                         <td><a href="${c.fichierData}" target="_blank" style="color:var(--accent)">Télécharger</a></td>
+                         <td><a href="${c.fichierData}" target="_blank" style="color:var(--accent); font-size: 1.2rem;" title="Télécharger"><i class="fas fa-download"></i></a></td>
                     </tr>
                  `;
             });
@@ -1235,6 +1243,30 @@ function loadSettingsStagiaire() {
     if (currentUser && currentUser.role === 'stagiaire') {
         const nameInput = document.getElementById('paramsNomStagiaire');
         if (nameInput) nameInput.value = `${currentUser.nom} ${currentUser.prenom}`;
+
+        // Dark Mode Logic
+        const darkModeToggle = document.getElementById('darkModeStagiaire');
+        if (darkModeToggle) {
+            // Load preference
+            const isDarkMode = localStorage.getItem('theme') !== 'light';
+            darkModeToggle.checked = isDarkMode;
+            if (!isDarkMode) {
+                document.body.classList.add('light-mode');
+            } else {
+                document.body.classList.remove('light-mode');
+            }
+
+            // Event Listener
+            darkModeToggle.addEventListener('change', function () {
+                if (this.checked) {
+                    document.body.classList.remove('light-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.add('light-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        }
     }
 }
 

@@ -18,6 +18,64 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+body.light-mode {
+    --primary: #4e54c8;
+    --secondary: #8f94fb;
+    --accent: #00b4d8;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --dark: #ffffff;
+    --light: #333333;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    /* More opaque for light mode */
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    --text-primary: #333333;
+    --text-secondary: #666666;
+}
+
+body.light-mode {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--text-primary);
+}
+
+body.light-mode .user-info,
+body.light-mode .sidebar {
+    background: rgba(255, 255, 255, 0.5) !important;
+    border-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+body.light-mode input,
+body.light-mode select,
+body.light-mode textarea {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+body.light-mode select option {
+    background-color: #fff;
+    color: #333;
+}
+
+body.light-mode .nav-item {
+    color: #666;
+}
+
+body.light-mode .nav-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+body.light-mode .table td {
+    color: #333;
+}
+
+body.light-mode .timeline-item h4 {
+    color: #333 !important;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -791,21 +849,35 @@ input[type="file"]:hover {
 #stagiaireDashboard .dashboard-layout {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    /* Added: Ensure full width */
+    padding: 0;
+    /* Added: Remove any padding */
 }
 
 #stagiaireDashboard .sidebar {
+    display: flex;
+    /* Changed from none to flex - show as horizontal top bar */
     width: 100%;
     height: auto;
-    flex-direction: row;
-    padding: 10px 0;
+    flex-direction: column;
+    /* Changed: Stack items vertically */
+    flex-shrink: 1;
+    /* Added: Override default flex-shrink: 0 */
+    padding: 15px 20px;
     border-right: none;
-    border-bottom: none;
-    background: transparent;
-    backdrop-filter: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    /* Added: Center items horizontally */
+    gap: 15px;
+    /* Added: Space between user-info and menu */
 }
 
 #stagiaireDashboard .sidebar-header {
-    display: flex;
+    display: none;
+    /* Hide header in horizontal layout */
     align-items: center;
     margin-bottom: 0;
     margin-right: 30px;
@@ -818,20 +890,36 @@ input[type="file"]:hover {
 }
 
 #stagiaireDashboard .user-info {
-    margin-right: 30px;
+    display: flex;
+    /* Changed: Show user info */
+    /* Added: Hide user info to remove left sidebar space */
+    margin-right: 0;
+    /* Changed: Remove right margin */
+    margin-bottom: 0;
     flex-shrink: 0;
     background: rgba(255, 255, 255, 0.05);
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 12px 20px;
+    /* Increased padding */
+    border-radius: 12px;
 }
 
 #stagiaireDashboard .nav-links {
     flex-direction: row;
-    flex: 1;
-    overflow-x: auto;
+    flex: 0;
+    /* Changed: Don't grow, just wrap content */
+    width: 100%;
+    /* Added: Take full width */
+    overflow-x: visible;
+    /* Changed from auto to visible */
     overflow-y: visible;
     gap: 8px;
     align-items: center;
+    justify-content: center;
+    /* Added: Center menu items */
+    flex-wrap: wrap;
+    /* Added: Allow items to wrap on multiple lines */
+    max-height: none;
+    /* Added: Remove height restriction */
 }
 
 #stagiaireDashboard .nav-item {
@@ -855,6 +943,10 @@ input[type="file"]:hover {
 #stagiaireDashboard .main-content {
     flex: 1;
     padding: 30px;
+    width: 100%;
+    /* Added: Ensure full width */
+    margin: 0;
+    /* Added: Remove any margin */
 }
 
 /* Responsive adjustments for Stagiaire on small screens */
