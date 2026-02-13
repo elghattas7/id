@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assets/css/style.css?v=2">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<base target="_blank">
 </head>
 
 <body>
@@ -482,7 +483,17 @@
                             <h2>Vacances</h2>
                         </div>
                         <div class="glass content-card">
-                            <ul id="vacancesList">
+                            <div id="vacancesImageContainer" style="text-align: center; padding: 20px;">
+                                <img id="vacancesImage" src="vacancesOFPPT.jpg" alt="Calendrier des Vacances OFPPT" 
+                                     style="max-width: 100%; max-height: 600px; border-radius: 10px; cursor: zoom-in; transition: transform 0.3s ease;"
+                                     onclick="toggleImageZoom(this)">
+                                <div style="margin-top: 20px;">
+                                    <a href="vacancesOFPPT.jpg" download class="btn" style="display: inline-block; width: auto; padding: 10px 20px;">
+                                        <i class="fas fa-download"></i> Télécharger le calendrier
+                                    </a>
+                                </div>
+                            </div>
+                            <ul id="vacancesList" style="display: none;">
                                 <li>Chargement...</li>
                             </ul>
                         </div>
@@ -660,6 +671,7 @@
                                         <th>Contrôles</th>
                                         <th>EFM</th>
                                         <th>Moyenne</th>
+                                        <th>Classement</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -748,7 +760,17 @@
                         <h2>Vacances</h2>
                     </div>
                     <div class="glass content-card">
-                        <ul id="vacancesListStagiaire">
+                        <div id="vacancesImageContainerStagiaire" style="text-align: center; padding: 20px;">
+                            <img id="vacancesImageStagiaire" src="vacancesOFPPT.jpg" alt="Calendrier des Vacances OFPPT" 
+                                 style="max-width: 100%; max-height: 600px; border-radius: 10px; cursor: zoom-in; transition: transform 0.3s ease;"
+                                 onclick="toggleImageZoom(this)">
+                            <div style="margin-top: 20px;">
+                                <a href="vacancesOFPPT.jpg" download class="btn" style="display: inline-block; width: auto; padding: 10px 20px;">
+                                    <i class="fas fa-download"></i> Télécharger le calendrier
+                                </a>
+                            </div>
+                        </div>
+                        <ul id="vacancesListStagiaire" style="display: none;">
                             <li>Chargement...</li>
                         </ul>
                     </div>
