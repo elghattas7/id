@@ -727,77 +727,79 @@ input[type="file"]:hover {
     }
 
     .sidebar {
-        position: fixed;
+        width: 100%;
+        height: auto;
+        position: sticky;
         top: 0;
-        left: -280px;
-        /* Hide off-screen */
-        width: 280px;
-        height: 100vh;
-        flex-direction: column;
-        background: #1a1a2e;
-        /* Solid background */
         z-index: 1000;
-        padding: 20px;
-        border-right: 1px solid var(--glass-border);
-        border-bottom: none;
-        justify-content: flex-start;
-        align-items: flex-start;
-        border-radius: 0;
-        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: #1a1a2e;
+        padding: 5px;
+        border-bottom: 1px solid var(--glass-border);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        left: auto;
     }
 
     .sidebar.active {
-        left: 0;
-        /* Slide in */
+        left: auto;
     }
 
     .sidebar-header,
-    .nav-actions,
-    .user-info {
-        display: flex;
-        /* Show elements in drawer */
+    .user-info,
+    .nav-actions {
+        display: none !important;
     }
 
     .nav-links {
-        flex-direction: column;
-        overflow-y: auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* Key for two lines */
+        justify-content: center;
         width: 100%;
-        justify-content: flex-start;
-        gap: 10px;
-        margin-top: 20px;
-        max-height: calc(100vh - 200px);
+        gap: 5px;
+        margin-top: 0;
+        overflow: visible;
+        max-height: none;
     }
 
     .nav-item {
-        flex-direction: row;
-        padding: 14px 20px;
-        font-size: 0.95rem;
-        gap: 12px;
-        justify-content: flex-start;
-        border-radius: 12px;
-        width: 100%;
+        flex: 0 0 calc(20% - 6px);
+        /* ~5 items per row */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 2px;
+        background: transparent;
+        color: var(--text-secondary);
+        border-radius: 8px;
+        font-size: 0.7rem;
+        height: auto;
+        text-align: center;
+        width: auto;
+    }
+
+    .nav-item i {
+        font-size: 1.1rem;
+        margin-bottom: 3px;
     }
 
     .nav-item span {
         display: block;
-        /* Show text */
-        font-size: 0.95rem;
+        font-size: 0.65rem;
+        line-height: 1.1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
     }
 
-    /* Mobile Header */
-    .mobile-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        background: rgba(15, 12, 41, 0.95);
-        backdrop-filter: blur(10px);
-        position: sticky;
-        top: 0;
-        z-index: 900;
-        border-bottom: 1px solid var(--glass-border);
-        width: 100%;
+    .mobile-header,
+    .mobile-overlay {
+        display: none !important;
     }
 
     .mobile-nav-toggle {
@@ -994,66 +996,69 @@ input[type="file"]:hover {
 /* Responsive adjustments for Stagiaire on small screens */
 @media (max-width: 768px) {
     #stagiaireDashboard .sidebar {
-        position: fixed;
+        position: sticky;
         top: 0;
-        left: -280px;
-        /* Hide off-screen */
-        width: 280px;
-        height: 100vh;
+        left: auto;
+        width: 100%;
+        height: auto;
         flex-direction: column;
         background: #1a1a2e;
         z-index: 1000;
-        padding: 20px;
-        border-right: 1px solid var(--glass-border);
-        border-bottom: none;
+        padding: 5px;
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
         border-radius: 0;
-        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-        align-items: flex-start;
-        justify-content: flex-start;
-        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        align-items: center;
+        justify-content: center;
     }
 
     #stagiaireDashboard .sidebar.active {
-        left: 0;
+        left: auto;
     }
 
-    #stagiaireDashboard .sidebar-header {
-        display: none;
-    }
-
+    #stagiaireDashboard .sidebar-header,
+    #stagiaireDashboard .user-info,
     #stagiaireDashboard .mobile-header {
-        display: flex !important;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    #stagiaireDashboard .user-info {
-        display: flex;
-        /* Show user info in drawer */
-        width: 100%;
-        margin-bottom: 20px;
+        display: none !important;
     }
 
     #stagiaireDashboard .nav-links {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         width: 100%;
-        gap: 10px;
-        overflow-y: auto;
-        justify-content: flex-start;
-        max-height: calc(100vh - 200px);
-        flex: 1;
+        gap: 5px;
+        overflow: visible;
+        justify-content: center;
+        max-height: none;
+        margin-top: 0;
     }
 
     #stagiaireDashboard .nav-item {
-        flex-direction: row;
-        padding: 14px 20px;
-        font-size: 0.95rem;
-        gap: 12px;
-        width: 100%;
-        justify-content: flex-start;
-        border-radius: 12px;
+        flex: 0 0 calc(20% - 6px);
+        flex-direction: column;
+        padding: 6px 2px;
+        font-size: 0.7rem;
+        gap: 2px;
+        width: auto;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
         border-bottom: none;
-        /* Remove bottom border from horizontal layout */
+    }
+
+    #stagiaireDashboard .nav-item i {
+        font-size: 1.1rem;
+        margin-bottom: 2px;
+    }
+
+    #stagiaireDashboard .nav-item span {
+        font-size: 0.65rem;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
     }
 
     #stagiaireDashboard .nav-item.active {
