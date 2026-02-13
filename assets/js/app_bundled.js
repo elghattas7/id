@@ -817,9 +817,9 @@ function formatFileSize(bytes) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-// Vacances (Modified to accept containerID)
-function afficherVacances(containerId = 'vacancesList') {
-    const list = document.getElementById(containerId);
+// Vacances
+function afficherVacances() {
+    const list = document.getElementById('vacancesList');
     if (!list) return;
     list.innerHTML = '';
 
@@ -917,7 +917,7 @@ function ajouterExamen() {
 
     const file = fileInput.files[0];
 
-    // Use FileReader to convert to Base64 (No Bucket required)
+        // Use FileReader to convert to Base64 (No Bucket required)
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
@@ -930,7 +930,7 @@ function ajouterExamen() {
             annee: annee,
             fichier_nom: file.name,
             fichier_url: base64Data // Storing the full Data URI
-        }]).then(async ({ data: insertedData, error }) => {
+        }]).then(({ error }) => {
             if (error) {
                 console.error('Error inserting sujet:', error);
                 if (error.message && error.message.includes('payload')) {
@@ -939,20 +939,22 @@ function ajouterExamen() {
                     alert("Erreur base de données: " + error.message);
                 }
             } else {
-                console.log('Sujet inserted successfully:', insertedData);
+                // Update local data
+                const newExamen = {
+                    id: Date.now(), // Temporary ID until refresh
+                    titre: titre,
+                    annee: annee,
+                    fichierData: base64Data,
+                    fichierNom: file.name,
+                    dateAjout: new Date().toLocaleDateString()
+                };
 
-                // Reload data from Supabase to ensure we have the correct file_url
-                await loadData();
+                if (!data.examens) data.examens = [];
+                data.examens.push(newExamen);
 
-                // Update displays
                 afficherSujets();
                 if (document.getElementById('examensListStagiaire')) {
                     afficherSujets('examensListStagiaire');
-                }
-
-                // Update dashboard stats if formateur
-                if (currentUser && currentUser.role === 'formateur') {
-                    updateDashboardStats();
                 }
 
                 // Reset form
@@ -1038,11 +1040,47 @@ function loadStagiaireData() {
         const notesTable = document.querySelector('#mesNotesTable tbody');
         if (notesTable) {
             notesTable.innerHTML = '';
-            data.modules.filter(m => m.annee === currentUser.annee).forEach(m => {
+
+            // Get all modules for the current user's year
+            const userModules = data.modules.filter(m => m.annee === currentUser.annee);
+
+            userModules.forEach(m => {
                 const key = `${m.id}_${currentUser.id}`;
                 const notes = data.notes[key];
                 if (notes) {
                     const moyenne = calculerMoyenne(notes, m.nbControles);
+
+                    // Calculate ranking for this module
+                    let classement = '-';
+                    if (moyenne !== '-') {
+                        // Get all students from the same year who have notes for this module
+                        const allStudentsInYear = data.stagiaires.filter(s => s.annee === currentUser.annee);
+                        const allMoyennes = [];
+
+                        allStudentsInYear.forEach(student => {
+                            const studentKey = `${m.id}_${student.id}`;
+                            const studentNotes = data.notes[studentKey];
+                            if (studentNotes) {
+                                const studentMoyenne = calculerMoyenne(studentNotes, m.nbControles);
+                                if (studentMoyenne !== '-') {
+                                    allMoyennes.push({
+                                        stagiaireId: student.id,
+                                        moyenne: parseFloat(studentMoyenne)
+                                    });
+                                }
+                            }
+                        });
+
+                        // Sort by moyenne descending
+                        allMoyennes.sort((a, b) => b.moyenne - a.moyenne);
+
+                        // Find current user's rank
+                        const userRank = allMoyennes.findIndex(item => item.stagiaireId === currentUser.id);
+                        if (userRank !== -1) {
+                            classement = `${userRank + 1} / ${allMoyennes.length}`;
+                        }
+                    }
+
                     // Vertical formatting for controls with /20
                     const controlesVertical = notes.controles.map((c, index) => `<div><span style="color: white; font-weight: bold;">Contrôle ${index + 1}:</span> <span style="color: #28a745; font-weight: bold;">${c}/20</span></div>`).join('');
 
@@ -1054,6 +1092,7 @@ function loadStagiaireData() {
                         <td>${controlesVertical}</td>
                         <td style="color: #ffc107; font-weight: bold;">${notes.efm ? notes.efm + '/40' : '-'}</td>
                         <td><strong style="color: #ff4b4b;">${moyenne}/20</strong></td>
+                        <td><span class="badge badge-primary" style="font-size: 1rem; padding: 8px 12px;">${classement}</span></td>
                     </tr>
                 `;
                 }
@@ -1110,8 +1149,6 @@ function loadStagiaireData() {
         afficherCalendrier('calendrierListStagiaire');
         console.log('Loading sujets...');
         afficherSujets('examensListStagiaire');
-        console.log('Loading vacances...');
-        afficherVacances('vacancesListStagiaire');
         console.log('Loading settings...');
         loadSettingsStagiaire();
         console.log('--- loadStagiaireData COMPLETED ---');
@@ -1182,55 +1219,6 @@ function afficherCalendrier(containerId = 'calendrierList') {
     });
 }
 
-
-// Function to download file from base64 or URL
-function telechargerFichier(fileData, fileName) {
-    if (!fileData) {
-        alert('Aucun fichier disponible');
-        return;
-    }
-
-    // If it's a base64 data URL
-    if (fileData.startsWith('data:')) {
-        // Extract mime type and base64 data
-        const matches = fileData.match(/^data:([^;]+);base64,(.+)$/);
-        if (matches) {
-            const mimeType = matches[1];
-            const base64Data = matches[2];
-
-            // Convert base64 to blob
-            const byteCharacters = atob(base64Data);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray], { type: mimeType });
-
-            // Create download link
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = fileName || 'download';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-        } else {
-            // Fallback: try direct download
-            const link = document.createElement('a');
-            link.href = fileData;
-            link.download = fileName || 'download';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    } else {
-        // It's a regular URL - open in new tab
-        window.open(fileData, '_blank');
-    }
-}
-
 // Sujets d'Examen (Modified to accept containerID)
 function afficherSujets(containerId = 'examensList') {
     const table = document.getElementById(containerId);
@@ -1253,23 +1241,23 @@ function afficherSujets(containerId = 'examensList') {
     }
 
     sujets.forEach(s => {
-        const isStagiaire = currentUser && currentUser.role === 'stagiaire';
+        // Correct download link or mock alert if no file
+        const downloadAction = s.fichierData
+            ? `window.open('${s.fichierData}', '_blank')`
+            : `alert('Téléchargement simulé pour: ${s.titre}')`;
 
-        // Create download handler - use a data attribute for the file URL
-        const downloadHandler = s.fichierData 
-            ? `telechargerFichier('${s.fichierData}', '${s.fichierNom || s.titre}')`
-            : `alert('Aucun fichier disponible pour: ${s.titre}')`;
+        const isStagiaire = currentUser && currentUser.role === 'stagiaire';
 
         tbody.innerHTML += `
             <tr>
                 <td>${s.titre}</td>
                 ${!isStagiaire ? `<td><span class="badge badge-primary">${s.annee}</span></td>` : ''}
                 <td>
-                    <button class="btn btn-sm" onclick="${downloadHandler}">
+                    <button class="btn btn-sm" onclick="${downloadAction}">
                         <i class="fas fa-download"></i>
                     </button>
-                    ${currentUser && currentUser.role === 'formateur' ? `
-                    <button class="btn btn-sm btn-danger" onclick="supprimerSujet('${s.id}', '${s.titre}')">
+                    ${currentUser.role === 'formateur' ? `
+                    <button class="btn btn-sm btn-danger" onclick="supprimerSujet(${s.id}, '${s.titre}')">
                         <i class="fas fa-trash"></i>
                     </button>` : ''}
                 </td>
@@ -1278,31 +1266,13 @@ function afficherSujets(containerId = 'examensList') {
     });
 }
 
-async function supprimerSujet(id, titre) {
+function supprimerSujet(titre) {
     if (confirm(`Voulez-vous vraiment supprimer le sujet "${titre}" ?`)) {
-        // Delete from Supabase
-        const { error } = await supabase.from('examens').delete().eq('id', id);
-
-        if (error) {
-            console.error('Error deleting sujet:', error);
-            alert('Erreur lors de la suppression: ' + error.message);
-            return;
-        }
-
-        // Reload data to ensure consistency
-        await loadData();
-
+        // Remove from data (Mock)
+        data.examens = data.examens.filter(e => e.titre !== titre);
         // Refresh displays
         afficherSujets('examensList');
-        if (document.getElementById('examensListStagiaire')) {
-            afficherSujets('examensListStagiaire');
-        }
-
-        // Update dashboard stats if formateur
-        if (currentUser && currentUser.role === 'formateur') {
-            updateDashboardStats();
-        }
-
+        // Also refresh stagiaire list if visible/applicable, but usually handled by reload or switchTab
         alert('Sujet supprimé avec succès.');
     }
 }
@@ -1500,3 +1470,30 @@ function chargerModulesPublication() {
         console.log('No year selected or no modules data');
     }
 }
+
+// Toggle image zoom for vacances calendar
+function toggleImageZoom(img) {
+    if (img.style.transform === 'scale(1.5)') {
+        img.style.transform = 'scale(1)';
+        img.style.cursor = 'zoom-in';
+        img.style.zIndex = '1';
+        img.style.position = 'relative';
+    } else {
+        img.style.transform = 'scale(1.5)';
+        img.style.cursor = 'zoom-out';
+        img.style.zIndex = '1000';
+        img.style.position = 'relative';
+    }
+}
+
+// Close zoomed image when clicking outside
+ document.addEventListener('click', function(e) {
+    const images = document.querySelectorAll('#vacancesImage, #vacancesImageStagiaire');
+    images.forEach(img => {
+        if (e.target !== img && img.style.transform === 'scale(1.5)') {
+            img.style.transform = 'scale(1)';
+            img.style.cursor = 'zoom-in';
+            img.style.zIndex = '1';
+        }
+    });
+});
