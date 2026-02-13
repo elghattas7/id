@@ -817,9 +817,9 @@ function formatFileSize(bytes) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-// Vacances
-function afficherVacances() {
-    const list = document.getElementById('vacancesList');
+// Vacances (Modified to accept containerID)
+function afficherVacances(containerId = 'vacancesList') {
+    const list = document.getElementById(containerId);
     if (!list) return;
     list.innerHTML = '';
 
@@ -917,7 +917,7 @@ function ajouterExamen() {
 
     const file = fileInput.files[0];
 
-        // Use FileReader to convert to Base64 (No Bucket required)
+    // Use FileReader to convert to Base64 (No Bucket required)
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
@@ -930,7 +930,7 @@ function ajouterExamen() {
             annee: annee,
             fichier_nom: file.name,
             fichier_url: base64Data // Storing the full Data URI
-        }]).then(({ error }) => {
+        }]).then(async ({ data: insertedData, error }) => {
             if (error) {
                 console.error('Error inserting sujet:', error);
                 if (error.message && error.message.includes('payload')) {
@@ -939,22 +939,20 @@ function ajouterExamen() {
                     alert("Erreur base de données: " + error.message);
                 }
             } else {
-                // Update local data
-                const newExamen = {
-                    id: Date.now(), // Temporary ID until refresh
-                    titre: titre,
-                    annee: annee,
-                    fichierData: base64Data,
-                    fichierNom: file.name,
-                    dateAjout: new Date().toLocaleDateString()
-                };
+                console.log('Sujet inserted successfully:', insertedData);
 
-                if (!data.examens) data.examens = [];
-                data.examens.push(newExamen);
+                // Reload data from Supabase to ensure we have the correct file_url
+                await loadData();
 
+                // Update displays
                 afficherSujets();
                 if (document.getElementById('examensListStagiaire')) {
                     afficherSujets('examensListStagiaire');
+                }
+
+                // Update dashboard stats if formateur
+                if (currentUser && currentUser.role === 'formateur') {
+                    updateDashboardStats();
                 }
 
                 // Reset form
@@ -1112,6 +1110,8 @@ function loadStagiaireData() {
         afficherCalendrier('calendrierListStagiaire');
         console.log('Loading sujets...');
         afficherSujets('examensListStagiaire');
+        console.log('Loading vacances...');
+        afficherVacances('vacancesListStagiaire');
         console.log('Loading settings...');
         loadSettingsStagiaire();
         console.log('--- loadStagiaireData COMPLETED ---');
@@ -1182,6 +1182,55 @@ function afficherCalendrier(containerId = 'calendrierList') {
     });
 }
 
+
+// Function to download file from base64 or URL
+function telechargerFichier(fileData, fileName) {
+    if (!fileData) {
+        alert('Aucun fichier disponible');
+        return;
+    }
+
+    // If it's a base64 data URL
+    if (fileData.startsWith('data:')) {
+        // Extract mime type and base64 data
+        const matches = fileData.match(/^data:([^;]+);base64,(.+)$/);
+        if (matches) {
+            const mimeType = matches[1];
+            const base64Data = matches[2];
+
+            // Convert base64 to blob
+            const byteCharacters = atob(base64Data);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: mimeType });
+
+            // Create download link
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName || 'download';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        } else {
+            // Fallback: try direct download
+            const link = document.createElement('a');
+            link.href = fileData;
+            link.download = fileName || 'download';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    } else {
+        // It's a regular URL - open in new tab
+        window.open(fileData, '_blank');
+    }
+}
+
 // Sujets d'Examen (Modified to accept containerID)
 function afficherSujets(containerId = 'examensList') {
     const table = document.getElementById(containerId);
@@ -1204,23 +1253,23 @@ function afficherSujets(containerId = 'examensList') {
     }
 
     sujets.forEach(s => {
-        // Correct download link or mock alert if no file
-        const downloadAction = s.fichierData
-            ? `window.open('${s.fichierData}', '_blank')`
-            : `alert('Téléchargement simulé pour: ${s.titre}')`;
-
         const isStagiaire = currentUser && currentUser.role === 'stagiaire';
+
+        // Create download handler - use a data attribute for the file URL
+        const downloadHandler = s.fichierData 
+            ? `telechargerFichier('${s.fichierData}', '${s.fichierNom || s.titre}')`
+            : `alert('Aucun fichier disponible pour: ${s.titre}')`;
 
         tbody.innerHTML += `
             <tr>
                 <td>${s.titre}</td>
                 ${!isStagiaire ? `<td><span class="badge badge-primary">${s.annee}</span></td>` : ''}
                 <td>
-                    <button class="btn btn-sm" onclick="${downloadAction}">
+                    <button class="btn btn-sm" onclick="${downloadHandler}">
                         <i class="fas fa-download"></i>
                     </button>
-                    ${currentUser.role === 'formateur' ? `
-                    <button class="btn btn-sm btn-danger" onclick="supprimerSujet(${s.id}, '${s.titre}')">
+                    ${currentUser && currentUser.role === 'formateur' ? `
+                    <button class="btn btn-sm btn-danger" onclick="supprimerSujet('${s.id}', '${s.titre}')">
                         <i class="fas fa-trash"></i>
                     </button>` : ''}
                 </td>
@@ -1229,13 +1278,31 @@ function afficherSujets(containerId = 'examensList') {
     });
 }
 
-function supprimerSujet(titre) {
+async function supprimerSujet(id, titre) {
     if (confirm(`Voulez-vous vraiment supprimer le sujet "${titre}" ?`)) {
-        // Remove from data (Mock)
-        data.examens = data.examens.filter(e => e.titre !== titre);
+        // Delete from Supabase
+        const { error } = await supabase.from('examens').delete().eq('id', id);
+
+        if (error) {
+            console.error('Error deleting sujet:', error);
+            alert('Erreur lors de la suppression: ' + error.message);
+            return;
+        }
+
+        // Reload data to ensure consistency
+        await loadData();
+
         // Refresh displays
         afficherSujets('examensList');
-        // Also refresh stagiaire list if visible/applicable, but usually handled by reload or switchTab
+        if (document.getElementById('examensListStagiaire')) {
+            afficherSujets('examensListStagiaire');
+        }
+
+        // Update dashboard stats if formateur
+        if (currentUser && currentUser.role === 'formateur') {
+            updateDashboardStats();
+        }
+
         alert('Sujet supprimé avec succès.');
     }
 }
