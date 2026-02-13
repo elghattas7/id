@@ -917,39 +917,63 @@ function ajouterExamen() {
 
     const file = fileInput.files[0];
 
-    // Simulate upload
-    const newExamen = {
-        id: Date.now(),
-        titre: titre,
-        annee: annee,
-        fichierData: '#', // Mock link
-        fichierNom: file.name,
-        dateAjout: new Date().toLocaleDateString()
-    };
+    // Generate unique file path
+    const filePath = `examens/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
 
-    // Insert into Supabase 'examens' table
-    supabase.from('examens').insert([{
-        titre: titre,
-        annee: annee,
-        fichier_nom: file.name,
-        fichier_url: '#'
-    }]).then(({ error }) => {
-        if (error) {
-            console.error('Error inserting sujet:', error);
-            alert("Erreur: " + error.message);
-        } else {
-            data.examens.push(newExamen);
-            afficherSujets();
-            if (document.getElementById('examensListStagiaire')) {
-                afficherSujets('examensListStagiaire');
+    // Upload to Supabase Storage
+    supabase.storage.from('examens').upload(filePath, file)
+        .then(({ data: uploadData, error: uploadError }) => {
+            if (uploadError) {
+                console.error('Error uploading file:', uploadError);
+                alert("Erreur lors de l'upload du fichier: " + uploadError.message);
+                return;
             }
-            alert("Sujet d'examen ajouté et enregistré !");
-        }
-    });
 
-    // Reset
-    document.getElementById('examenTitre').value = '';
-    fileInput.value = '';
+            // Get Public URL
+            const { data: urlData } = supabase.storage.from('examens').getPublicUrl(filePath);
+            const publicURL = urlData.publicUrl;
+
+            // Insert into Supabase 'examens' table
+            return supabase.from('examens').insert([{
+                titre: titre,
+                annee: annee,
+                fichier_nom: file.name,
+                fichier_url: publicURL
+            }]).then(({ error }) => {
+                if (error) {
+                    console.error('Error inserting sujet:', error);
+                    alert("Erreur base de données: " + error.message);
+                } else {
+                    // Update local data
+                    const newExamen = {
+                        id: Date.now(), // Temporary ID until refresh
+                        titre: titre,
+                        annee: annee,
+                        fichierData: publicURL,
+                        fichierNom: file.name,
+                        dateAjout: new Date().toLocaleDateString()
+                    };
+
+                    if (!data.examens) data.examens = [];
+                    data.examens.push(newExamen);
+
+                    afficherSujets();
+                    if (document.getElementById('examensListStagiaire')) {
+                        afficherSujets('examensListStagiaire');
+                    }
+
+                    // Reset form
+                    document.getElementById('examenTitre').value = '';
+                    fileInput.value = '';
+
+                    alert("Sujet d'examen ajouté et enregistré !");
+                }
+            });
+        })
+        .catch(err => {
+            console.error('Unexpected error:', err);
+            alert("Une erreur inattendue est survenue.");
+        });
 }
 
 // Formateur Data Loader Helper
