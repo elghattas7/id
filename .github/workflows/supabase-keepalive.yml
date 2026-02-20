@@ -1,0 +1,25 @@
+name: Keep Supabase Active
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Query keepalive table
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+          "https://ugnirkolwlqblcnamthe.supabase.co/rest/v1/keepalive?select=id&limit=1")
+
+          if [ "$response" -ne 200 ]; then
+            echo "Supabase not responding properly. HTTP code: $response"
+            exit 1
+          else
+            echo "Supabase is active ✔"
+          fi
