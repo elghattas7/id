@@ -1028,6 +1028,26 @@ function afficherStatistiques() {
 // ... (Rest of existing functions)
 
 // Stagiaire Features
+
+// Helper: French ordinal suffix
+function ordinalFr(n) {
+    if (n === 1) return '1<sup>er</sup>';
+    return `${n}<sup>ème</sup>`;
+}
+
+// Helper: Calculate EFM for discipline module from total absences
+function calculerEFMDiscipline(totalAbsences) {
+    if (totalAbsences > 40) return 13.33;
+    let efm = (10 - totalAbsences * 0.25 + 5) * 40 / 15;
+    efm = Math.max(0, Math.min(40, efm));
+    return parseFloat(efm.toFixed(2));
+}
+
+// Helper: Check if a module is the discipline module (by name)
+function isDisciplineModule(moduleName) {
+    return moduleName && moduleName.trim().toLowerCase().includes('discipline');
+}
+
 // Stagiaire Data Loader
 function loadStagiaireData() {
     console.log('--- loadStagiaireData STARTED ---');
@@ -1041,48 +1061,78 @@ function loadStagiaireData() {
         if (notesTable) {
             notesTable.innerHTML = '';
 
+            // Count total absences for current user
+            const mesAbsences = data.absences.filter(a => a.stagiaireId === currentUser.id);
+            const totalAbsences = mesAbsences.length;
+
             // Get all modules for the current user's year
             const userModules = data.modules.filter(m => m.annee === currentUser.annee);
 
+            // Get all stagiaires of same year for ranking
+            const coPromos = data.stagiaires.filter(s => s.annee === currentUser.annee);
+
             userModules.forEach(m => {
                 const key = `${m.id}_${currentUser.id}`;
-                const notes = data.notes[key];
+                let notes = data.notes[key] ? { ...data.notes[key] } : null;
+
+                // Auto-calculate EFM for discipline module
+                if (isDisciplineModule(m.nom)) {
+                    const efmDiscipline = calculerEFMDiscipline(totalAbsences);
+                    if (!notes) notes = { controles: [], efm: efmDiscipline };
+                    else notes = { ...notes, efm: efmDiscipline };
+                }
+
                 if (notes) {
                     const moyenne = calculerMoyenne(notes, m.nbControles);
 
-                    // Calculate ranking for this module
-                    let classement = '-';
+                    // --- Compute classement for this module ---
+                    let classementHtml = '-';
                     if (moyenne !== '-') {
-                        // Get all students from the same year who have notes for this module
-                        const allStudentsInYear = data.stagiaires.filter(s => s.annee === currentUser.annee);
-                        const allMoyennes = [];
+                        const moyennesList = coPromos.map(s => {
+                            const sKey = `${m.id}_${s.id}`;
+                            let sNotes = data.notes[sKey] ? { ...data.notes[sKey] } : null;
 
-                        allStudentsInYear.forEach(student => {
-                            const studentKey = `${m.id}_${student.id}`;
-                            const studentNotes = data.notes[studentKey];
-                            if (studentNotes) {
-                                const studentMoyenne = calculerMoyenne(studentNotes, m.nbControles);
-                                if (studentMoyenne !== '-') {
-                                    allMoyennes.push({
-                                        stagiaireId: student.id,
-                                        moyenne: parseFloat(studentMoyenne)
-                                    });
-                                }
+                            if (isDisciplineModule(m.nom)) {
+                                const sAbsences = data.absences.filter(a => a.stagiaireId === s.id).length;
+                                const sEfm = calculerEFMDiscipline(sAbsences);
+                                if (!sNotes) sNotes = { controles: [], efm: sEfm };
+                                else sNotes = { ...sNotes, efm: sEfm };
                             }
-                        });
 
-                        // Sort by moyenne descending
-                        allMoyennes.sort((a, b) => b.moyenne - a.moyenne);
+                            const sMoy = sNotes ? calculerMoyenne(sNotes, m.nbControles) : '-';
+                            return { id: s.id, moy: sMoy === '-' ? -1 : parseFloat(sMoy) };
+                        }).filter(x => x.moy >= 0);
 
-                        // Find current user's rank
-                        const userRank = allMoyennes.findIndex(item => item.stagiaireId === currentUser.id);
-                        if (userRank !== -1) {
-                            classement = `${userRank + 1} / ${allMoyennes.length}`;
+                        moyennesList.sort((a, b) => b.moy - a.moy);
+
+                        let rank = 1;
+                        for (let i = 0; i < moyennesList.length; i++) {
+                            if (moyennesList[i].id === currentUser.id) {
+                                rank = i + 1;
+                                break;
+                            }
                         }
+
+                        let trophy = '';
+                        if (rank === 1) trophy = ' 🏆';
+                        else if (rank === 2) trophy = ' 🥈';
+                        else if (rank === 3) trophy = ' 🥉';
+
+                        classementHtml = `<span style="font-weight:bold; color: var(--accent);">${ordinalFr(rank)}${trophy}</span>`;
+                    }
+
+                    // Display EFM
+                    let efmDisplay;
+                    if (isDisciplineModule(m.nom)) {
+                        efmDisplay = '-'; // EFM not displayed for discipline module
+                    } else {
+                        efmDisplay = notes.efm !== undefined && notes.efm !== null ? `<span style="color:#ffc107; font-weight:bold;">${notes.efm}/40</span>` : '-';
                     }
 
                     // Vertical formatting for controls with /20
-                    const controlesVertical = notes.controles.map((c, index) => `<div><span style="color: white; font-weight: bold;">Contrôle ${index + 1}:</span> <span style="color: #28a745; font-weight: bold;">${c}/20</span></div>`).join('');
+                    const controlesVertical = (notes.controles || []).map((c, index) =>
+                        `<div><span style="color: white; font-weight: bold;">Contrôle ${index + 1}:</span> <span style="color: #28a745; font-weight: bold;">${c}/20</span></div>`
+                    ).join('');
 
                     notesTable.innerHTML += `
                     <tr>
@@ -1090,9 +1140,9 @@ function loadStagiaireData() {
                         <td>${m.type}</td>
                         <td>${m.coefficient}</td>
                         <td>${controlesVertical}</td>
-                        <td style="color: #ffc107; font-weight: bold;">${notes.efm ? notes.efm + '/40' : '-'}</td>
+                        <td>${efmDisplay}</td>
                         <td><strong style="color: #ff4b4b;">${moyenne}/20</strong></td>
-                        <td><span class="badge badge-primary" style="font-size: 1rem; padding: 8px 12px;">${classement}</span></td>
+                        <td>${classementHtml}</td>
                     </tr>
                 `;
                 }
