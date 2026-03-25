@@ -68,7 +68,24 @@ body.light-mode .nav-item:hover {
     color: #333;
 }
 
-body.light-mode .table td {
+body.light-mode td {
+    color: #333;
+    background: rgba(0, 0, 0, 0.03);
+}
+
+body.light-mode tr:hover td {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+body.light-mode .info-card p {
+    color: #333;
+}
+
+body.light-mode .page-header h2 {
+    color: #333;
+}
+
+body.light-mode .mobile-nav-toggle {
     color: #333;
 }
 
@@ -463,7 +480,7 @@ select option {
 
 .nav-item:hover {
     background: rgba(255, 255, 255, 0.05);
-    color: white;
+    color: var(--text-primary);
 }
 
 .nav-item.active {
@@ -570,7 +587,7 @@ select option {
 .info-card p {
     font-size: 2.2rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-primary);
 }
 
 .info-card::after {
@@ -623,7 +640,7 @@ th {
 td {
     padding: 15px;
     background: rgba(255, 255, 255, 0.03);
-    color: white;
+    color: var(--text-primary);
 }
 
 tr td:first-child {
@@ -680,7 +697,7 @@ input[type="file"]:hover {
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
-    color: white;
+    color: var(--text-primary);
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
@@ -809,7 +826,7 @@ input[type="file"]:hover {
         display: block;
         background: transparent;
         border: none;
-        color: white;
+        color: var(--text-primary);
         font-size: 1.5rem;
         cursor: pointer;
         padding: 5px;
