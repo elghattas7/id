@@ -40,12 +40,77 @@ body.light-mode {
     color: var(--text-primary);
 }
 
-body.light-mode .user-info,
-body.light-mode .sidebar {
-    background: rgba(255, 255, 255, 0.5) !important;
-    border-color: rgba(0, 0, 0, 0.05) !important;
+/* Comprehensive light mode text fix — covers ALL text elements */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6,
+body.light-mode p,
+body.light-mode span,
+body.light-mode td,
+body.light-mode th,
+body.light-mode label,
+body.light-mode strong,
+body.light-mode li,
+body.light-mode button:not(.btn):not(.btn-logout) {
+    color: #333333;
 }
 
+/* Keep accent color on content-card titles */
+body.light-mode .content-card h3 {
+    color: var(--accent);
+}
+
+/* Keep specific button colors */
+body.light-mode .btn {
+    color: white;
+}
+
+body.light-mode .btn-logout {
+    color: #ff6b6b;
+}
+
+body.light-mode .btn-delete {
+    color: #ff6b6b;
+}
+
+/* Badges keep their own colors */
+body.light-mode .badge-primary {
+    color: #4e54c8;
+    background: rgba(78, 84, 200, 0.15);
+}
+
+body.light-mode .badge-success {
+    color: #28a745;
+    background: rgba(40, 167, 69, 0.15);
+}
+
+/* Nav items */
+body.light-mode .nav-item {
+    color: #666;
+}
+
+body.light-mode .nav-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+body.light-mode .nav-item.active {
+    color: var(--accent);
+}
+
+/* Table cells */
+body.light-mode td {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+body.light-mode tr:hover td {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* Inputs */
 body.light-mode input,
 body.light-mode select,
 body.light-mode textarea {
@@ -59,36 +124,19 @@ body.light-mode select option {
     color: #333;
 }
 
-body.light-mode .nav-item {
-    color: #666;
+/* Sidebar & user-info */
+body.light-mode .user-info,
+body.light-mode .sidebar {
+    background: rgba(255, 255, 255, 0.5) !important;
+    border-color: rgba(0, 0, 0, 0.05) !important;
 }
 
-body.light-mode .nav-item:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: #333;
-}
-
-body.light-mode td {
-    color: #333;
-    background: rgba(0, 0, 0, 0.03);
-}
-
-body.light-mode tr:hover td {
-    background: rgba(0, 0, 0, 0.06);
-}
-
-body.light-mode .info-card p {
-    color: #333;
-}
-
-body.light-mode .page-header h2 {
-    color: #333;
-}
-
+/* Mobile nav toggle */
 body.light-mode .mobile-nav-toggle {
     color: #333;
 }
 
+/* Timeline */
 body.light-mode .timeline-item h4 {
     color: #333 !important;
 }
