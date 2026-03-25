@@ -3,8 +3,11 @@
  * Logic moved from index.html to app.js
  */
 
-// Initialize Theme immediately
+// Initialize Theme immediately — dark mode is the default
 (function () {
+    if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', 'dark');
+    }
     const isDarkMode = localStorage.getItem('theme') !== 'light';
     if (!isDarkMode) {
         document.body.classList.add('light-mode');
@@ -1131,7 +1134,7 @@ function loadStagiaireData() {
 
                     // Vertical formatting for controls with /20
                     const controlesVertical = (notes.controles || []).map((c, index) =>
-                        `<div><span style="color: white; font-weight: bold;">Contrôle ${index + 1}:</span> <span style="color: #28a745; font-weight: bold;">${c}/20</span></div>`
+                        `<div><span style="font-weight: bold;">Contrôle ${index + 1}:</span> <span style="color: #28a745; font-weight: bold;">${c}/20</span></div>`
                     ).join('');
 
                     notesTable.innerHTML += `
@@ -1259,7 +1262,7 @@ function afficherCalendrier(containerId = 'calendrierList') {
                     ${new Date(ex.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
                 </div>
                 <div>
-                    <h4 style="margin: 0; color: white; display: flex; align-items: center;">
+                    <h4 style="margin: 0; color: var(--text-primary); display: flex; align-items: center;">
                         ${ex.titre} ${yearBadge}
                     </h4>
                     <small style="color: var(--text-secondary);"><i class="far fa-clock"></i> ${timeDisplay}</small>

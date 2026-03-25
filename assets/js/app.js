@@ -3,8 +3,11 @@
  * Logic moved from index.html to app.js
  */
 
-// Initialize Theme immediately
+// Initialize Theme immediately — dark mode is the default
 (function () {
+    if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', 'dark');
+    }
     const isDarkMode = localStorage.getItem('theme') !== 'light';
     if (!isDarkMode) {
         document.body.classList.add('light-mode');
